@@ -24,5 +24,15 @@ namespace TestTask
         {
             InitializeComponent();
         }
+
+        private void Button_Ok_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Button_Cancel_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
