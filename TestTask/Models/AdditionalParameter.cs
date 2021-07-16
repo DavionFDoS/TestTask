@@ -8,10 +8,10 @@ using System.Windows.Controls;
 
 namespace TestTask.Models
 {
-    class AdditionalParameter
+    public class AdditionalParameter
     {
         public string Title { get; set; }
-        public ComboBox Type { get; set; }
+        public string Type { get; set; }
         public string List { get; set; }
     }
 }
