@@ -34,5 +34,25 @@ namespace TestTask
         {
 
         }
+
+        private void button_Add_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void button_Up_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void button_Down_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void button_Remove_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
