@@ -14,38 +14,39 @@
             <RowDefinition Height="0.9*" />
             <RowDefinition Height="0.05*" />
         </Grid.RowDefinitions>
-        <Menu Grid.Row="0" VerticalAlignment="Center">
-            <MenuItem x:Name="button_Add" Click="button_Add_Click">
-                <MenuItem.Icon>
-                    <Image Source="Icons\plus.png"></Image>
-                </MenuItem.Icon>
-            </MenuItem>
-            <MenuItem x:Name="button_Up" Click="button_Up_Click">
-                <MenuItem.Icon>
-                    <Image Source="Icons\up.png"></Image>
-                </MenuItem.Icon>
-            </MenuItem>
-            <MenuItem x:Name="button_Down" Click="button_Down_Click">
-                <MenuItem.Icon>
-                    <Image Source="Icons\down.png"></Image>
-                </MenuItem.Icon>
-            </MenuItem>
-            <MenuItem x:Name="button_Remove" Click="button_Remove_Click">
-                <MenuItem.Icon>
-                    <Image Source="Icons\red cross.jpg"></Image>
-                </MenuItem.Icon>
-            </MenuItem>
-            
-        </Menu>
         <DataGrid x:Name="grid_AdditionalParameters" AutoGenerateColumns="True" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Top" VerticalScrollBarVisibility="Auto" SelectionMode="Extended">
             <DataGrid.Resources>
             </DataGrid.Resources>
         </DataGrid>
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width ="0.2*"/>
-                <ColumnDefinition Width ="0.8*"/>
+                <ColumnDefinition Width ="auto"/>
+                <ColumnDefinition Width ="*"/>
             </Grid.ColumnDefinitions>
+            <Menu Grid.Column="0" VerticalAlignment="Center" Visibility="Visible">
+                <MenuItem x:Name="button_Add" Click="button_Add_Click">
+                    <MenuItem.Icon>
+                        <Image Source="Icons\plus.png"></Image>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem x:Name="button_Up" Click="button_Up_Click">
+                    <MenuItem.Icon>
+                        <Image Source="Icons\up.png"></Image>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem x:Name="button_Down" Click="button_Down_Click">
+                    <MenuItem.Icon>
+                        <Image Source="Icons\down.png"></Image>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <Separator Width="2" Background="Black"/>
+                <MenuItem x:Name="button_Remove" Click="button_Remove_Click">
+                    <MenuItem.Icon>
+                        <Image Source="Icons\red cross.jpg"></Image>
+                    </MenuItem.Icon>
+                </MenuItem>
+
+            </Menu>
         </Grid>
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
