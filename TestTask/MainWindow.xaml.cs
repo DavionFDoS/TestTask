@@ -25,24 +25,24 @@ namespace TestTask
         {
             InitializeComponent();
 
-            List<AdditionalParameter> additionalParameters = new List<AdditionalParameter>
+            List<ComboBoxItem> comboBoxItems = new List<ComboBoxItem>
             {
-                    new AdditionalParameter {Title="Параметр 1", Type="Простая строка", List="Список..." },
-                    new AdditionalParameter {Title="Параметр 2", Type="Строка с историей", List="Список..." },
-                    new AdditionalParameter {Title="Параметр 3", Type="Значение из списка", List="Список..." },
-                    new AdditionalParameter {Title="Параметр 4", Type="Набор значений из списка", List="Список..." }
+                new ComboBoxItem { Content = "Простая строка" },
+                new ComboBoxItem { Content = "Строка с историей" },
+                new ComboBoxItem { Content = "Значение из списка" },
+                new ComboBoxItem { Content = "Набор значений из списка" }
+        };
+            ComboBox comboBox = new();
+            comboBox.ItemsSource = comboBoxItems;
+
+            List<AdditionalParameter> additionalParameters = new()
+            {
+                new AdditionalParameter { Title = "Параметр 1", Type = comboBoxItems[0].Content.ToString(), List = "Список значений" },
+                new AdditionalParameter { Title = "Параметр 2", Type = comboBoxItems[1].Content.ToString(), List = "Список значений" },
+                new AdditionalParameter { Title = "Параметр 3", Type = comboBoxItems[2].Content.ToString(), List = "Список значений" },
+                new AdditionalParameter { Title = "Параметр 4", Type = comboBoxItems[3].Content.ToString(), List = "Список значений" }
             };
             grid_AdditionalParameters.ItemsSource = additionalParameters;
-            //StackPanel stackPanel = new StackPanel();
-            //StackPanel expanderPanel = new StackPanel();
-            //expanderPanel.Children.Add(new ComboBoxItem { Content = "Простая строка" });
-            //expanderPanel.Children.Add(new ComboBoxItem { Content = "Строка с историей" });
-            //expanderPanel.Children.Add(new ComboBoxItem { Content = "Значение из списка" });
-            //expanderPanel.Children.Add(new ComboBoxItem { Content = "Набор значений из списка" });
-
-            //ComboBox comboBox = new ComboBox();
-            //comboBox.DataContext = expanderPanel;
-            //stackPanel.Children.Add(comboBox);
         }
 
         private void Button_Ok_Click(object sender, RoutedEventArgs e)

@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:TestTask"
         xmlns:loc="clr-namespace:TestTask.Models"
         xmlns:col="clr-namespace:System.Collections;assembly=mscorlib"
-        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib" d:DataContext="{d:DesignInstance Type=loc:AdditionalParameter}"
         mc:Ignorable="d"
         Title="Дополнительные параметры" Height="650" Width="700">
     <Grid>
@@ -46,9 +46,10 @@
         </Grid>
         <DataGrid x:Name="grid_AdditionalParameters" AutoGenerateColumns="True" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Top" VerticalScrollBarVisibility="Auto" SelectionMode="Extended">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Название" Binding="{Binding Path=Title}" Width="auto" />
-                <DataGridTextColumn Header="Тип" Binding="{Binding Path=Type}" Width="auto" />
-                <DataGridTextColumn Header="" Binding="{Binding Path=List}" Width="auto" />
+                <DataGridTextColumn Binding="{Binding Path=Title}" />
+                <DataGridComboBoxColumn Width="100" x:Name="comboBox_Type" 
+                    SelectedValueBinding="{Binding Type, Mode=TwoWay}"  
+                    DisplayMemberPath="{Binding Type}" />
             </DataGrid.Columns>
         </DataGrid>
         <Grid Grid.Row="2">

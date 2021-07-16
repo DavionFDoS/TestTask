@@ -19,11 +19,23 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="6.0.0-preview.6.21352.1" />
+    <PackageReference Include="SQLite" Version="3.13.0" />
+    <PackageReference Include="System.Data.SQLite" Version="1.0.114.4" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="cross-mark.jpg" />
     <Resource Include="down.png" />
     <Resource Include="plus.png" />
     <Resource Include="red cross.jpg" />
     <Resource Include="up.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="AdditionalParameters.db">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
