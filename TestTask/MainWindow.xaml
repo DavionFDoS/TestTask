@@ -23,29 +23,29 @@
                 <ColumnDefinition Width ="auto"/>
                 <ColumnDefinition Width ="*"/>
             </Grid.ColumnDefinitions>
-            <Menu Grid.Column="0" VerticalAlignment="Center" Visibility="Visible">
-                <MenuItem x:Name="button_Add" Click="button_Add_Click">
+            <Menu Grid.Column="0" VerticalAlignment="Center">
+                <MenuItem x:Name="button_Add" Click="button_Add_Click" Width="25" Height="25">
                     <MenuItem.Icon>
-                        <Image Source="Icons\plus.png"></Image>
+                        <Image Source="/plus.png"></Image>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem x:Name="button_Up" Click="button_Up_Click">
+                <MenuItem x:Name="button_Up" Click="button_Up_Click" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="25" Height="25">
                     <MenuItem.Icon>
-                        <Image Source="Icons\up.png"></Image>
+                        <Image Source="/up.png"></Image>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem x:Name="button_Down" Click="button_Down_Click">
+                <MenuItem x:Name="button_Down" Click="button_Down_Click" Width="25" Height="25">
                     <MenuItem.Icon>
-                        <Image Source="Icons\down.png"></Image>
+                        <Image Source="/down.png"></Image>
                     </MenuItem.Icon>
                 </MenuItem>
-                <Separator Width="2" Background="Black"/>
-                <MenuItem x:Name="button_Remove" Click="button_Remove_Click">
+                <Separator Width="1" VerticalAlignment="Stretch" BorderBrush="Black" Background="Black" />
+                <MenuItem x:Name="button_Remove" Click="button_Remove_Click" Width="25" Height="25">
                     <MenuItem.Icon>
-                        <Image Source="Icons\red cross.jpg"></Image>
+                        <Image Source="/red cross.jpg"></Image>
                     </MenuItem.Icon>
                 </MenuItem>
-
+                    
             </Menu>
         </Grid>
         <Grid Grid.Row="2">
