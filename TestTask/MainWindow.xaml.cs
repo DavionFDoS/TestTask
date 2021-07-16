@@ -72,7 +72,11 @@ namespace TestTask
 
         private void button_Remove_Click(object sender, RoutedEventArgs e)
         {
-
+            var selectedItems = grid_AdditionalParameters.SelectedItems;
+            if(selectedItems != null)
+            {
+                grid_AdditionalParameters.Items.Remove(selectedItems);
+            }
         }
     }
 }
