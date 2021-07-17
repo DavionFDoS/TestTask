@@ -27,6 +27,21 @@ namespace TestTask
             }
         }
 
+        // команда добавления нового объекта
+        private RelayCommand addCommand;
+        public RelayCommand AddCommand
+        {
+            get
+            {
+                return addCommand ??
+                  (addCommand = new RelayCommand(obj =>
+                  {
+                      AdditionalParameter additionalParameter = new AdditionalParameter();
+                      AdditionalParameters.Insert(0, additionalParameter);
+                      SelectedParameter = additionalParameter;
+                  }));
+            }
+        }
         public ApplicationViewModel(IFileService fileService)
         {
             this.fileService = fileService;

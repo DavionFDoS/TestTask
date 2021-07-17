@@ -21,19 +21,16 @@ namespace TestTask
     /// </summary>
     public partial class MainWindow : Window
     {
-        public List<string> Types;
+        public List<string> Types { get; set; }
         public MainWindow()
         {
             InitializeComponent();
-
-            DataContext = new ApplicationViewModel(new JsonFileService());
-             
             Types = new List<string>();
             Types.Add("Простая строка");
             Types.Add("Строка с историей");
             Types.Add("Значение из списка");
             Types.Add("Набор значений из списка");
-
+            DataContext = new ApplicationViewModel(new JsonFileService());
             comboBox_Type.ItemsSource = Types;
         }
 

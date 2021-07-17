@@ -12,7 +12,7 @@ namespace TestTask.Models
 {
     public partial class AdditionalParameter : INotifyPropertyChanged
     {
-        public int Id { get; set; }
+        //public int Id { get; set; }
         private string title;
         private string type;
         public string Title

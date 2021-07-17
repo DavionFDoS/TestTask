@@ -46,7 +46,7 @@
         </Grid>
         <DataGrid x:Name="grid_AdditionalParameters" 
                   ItemsSource="{Binding AdditionalParameters}"
-                  SelectedItem="{Binding AdditionalParameter}"
+                  SelectedItem="{Binding SelectedParameter}"
                   AutoGenerateColumns="False" 
                   Grid.Row="1" 
                   HorizontalAlignment="Stretch" 
@@ -56,8 +56,7 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Название" Width="*" Binding="{Binding Path=Title}"/>
                 <DataGridComboBoxColumn Header="Тип" Width="*" x:Name="comboBox_Type" 
-                    SelectedValueBinding="{Binding Type, Mode=TwoWay}"  
-                    DisplayMemberPath="{Binding Types}" />
+                    SelectedValueBinding="{Binding Type, Mode=TwoWay}"/>
                 <DataGridTemplateColumn Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
