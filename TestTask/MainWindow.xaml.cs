@@ -26,7 +26,7 @@ namespace TestTask
         {
             InitializeComponent();
 
-            DataContext = new ApplicationViewModel();
+            DataContext = new ApplicationViewModel(new JsonFileService());
              
             Types = new List<string>();
             Types.Add("Простая строка");

@@ -15,7 +15,7 @@ namespace TestTask
     public class ApplicationViewModel : INotifyPropertyChanged
     {
         private AdditionalParameter selectedParameter;
-
+        IFileService fileService;
         public ObservableCollection<AdditionalParameter> AdditionalParameters { get; set; }
         public AdditionalParameter SelectedParameter
         {
@@ -27,8 +27,9 @@ namespace TestTask
             }
         }
 
-        public ApplicationViewModel()
+        public ApplicationViewModel(IFileService fileService)
         {
+            this.fileService = fileService;
             AdditionalParameters = new ObservableCollection<AdditionalParameter>
             {
                 new AdditionalParameter {Title="Параметр 1", Type ="Простая строка"},
