@@ -21,28 +21,20 @@ namespace TestTask
     /// </summary>
     public partial class MainWindow : Window
     {
+        public List<string> Types;
         public MainWindow()
         {
             InitializeComponent();
 
-            List<ComboBoxItem> comboBoxItems = new List<ComboBoxItem>
-            {
-                new ComboBoxItem { Content = "Простая строка" },
-                new ComboBoxItem { Content = "Строка с историей" },
-                new ComboBoxItem { Content = "Значение из списка" },
-                new ComboBoxItem { Content = "Набор значений из списка" }
-        };
-            ComboBox comboBox = new();
-            comboBox.ItemsSource = comboBoxItems;
+            DataContext = new ApplicationViewModel();
+             
+            Types = new List<string>();
+            Types.Add("Простая строка");
+            Types.Add("Строка с историей");
+            Types.Add("Значение из списка");
+            Types.Add("Набор значений из списка");
 
-            List<AdditionalParameter> additionalParameters = new()
-            {
-                new AdditionalParameter { Title = "Параметр 1", Type = comboBoxItems[0].Content.ToString(), List = "Список значений" },
-                new AdditionalParameter { Title = "Параметр 2", Type = comboBoxItems[1].Content.ToString(), List = "Список значений" },
-                new AdditionalParameter { Title = "Параметр 3", Type = comboBoxItems[2].Content.ToString(), List = "Список значений" },
-                new AdditionalParameter { Title = "Параметр 4", Type = comboBoxItems[3].Content.ToString(), List = "Список значений" }
-            };
-            grid_AdditionalParameters.ItemsSource = additionalParameters;
+            comboBox_Type.ItemsSource = Types;
         }
 
         private void Button_Ok_Click(object sender, RoutedEventArgs e)
@@ -72,11 +64,11 @@ namespace TestTask
 
         private void button_Remove_Click(object sender, RoutedEventArgs e)
         {
-            var selectedItems = grid_AdditionalParameters.SelectedItems;
-            if(selectedItems != null)
-            {
-                grid_AdditionalParameters.Items.Remove(selectedItems);
-            }
+            //var selectedItems = grid_AdditionalParameters.SelectedItems;
+            //if(selectedItems != null)
+            //{
+            //    grid_AdditionalParameters.Items.Remove(selectedItems);
+            //}
         }
     }
 }

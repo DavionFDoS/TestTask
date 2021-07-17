@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:TestTask"
         xmlns:loc="clr-namespace:TestTask.Models"
         xmlns:col="clr-namespace:System.Collections;assembly=mscorlib"
-        xmlns:sys="clr-namespace:System;assembly=mscorlib" d:DataContext="{d:DesignInstance Type=loc:AdditionalParameter}"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib" d:DataContext="{d:DesignInstance Type=local:ApplicationViewModel}"
         mc:Ignorable="d"
         Title="Дополнительные параметры" Height="650" Width="700">
     <Grid>
@@ -44,12 +44,21 @@
                 </MenuItem>
             </Menu>
         </Grid>
-        <DataGrid x:Name="grid_AdditionalParameters" AutoGenerateColumns="True" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Top" VerticalScrollBarVisibility="Auto" SelectionMode="Extended">
+        <DataGrid x:Name="grid_AdditionalParameters" 
+                  ItemsSource="{Binding AdditionalParameters}"
+                  SelectedItem="{Binding AdditionalParameter}"
+                  AutoGenerateColumns="False" 
+                  Grid.Row="1" 
+                  HorizontalAlignment="Stretch" 
+                  VerticalAlignment="Top" 
+                  VerticalScrollBarVisibility="Auto" 
+                  SelectionMode="Extended">
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding Path=Title}" />
-                <DataGridComboBoxColumn Width="100" x:Name="comboBox_Type" 
+                <DataGridTextColumn Header="Название" Width="*" Binding="{Binding Path=Title}"/>
+                <DataGridComboBoxColumn Header="Тип" Width="*" x:Name="comboBox_Type" 
                     SelectedValueBinding="{Binding Type, Mode=TwoWay}"  
-                    DisplayMemberPath="{Binding Type}" />
+                    DisplayMemberPath="{Binding Types}" />
+                <DataGridTemplateColumn Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
         <Grid Grid.Row="2">

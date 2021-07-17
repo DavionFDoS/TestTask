@@ -15,7 +15,6 @@ namespace TestTask.Models
         public int Id { get; set; }
         private string title;
         private string type;
-        private string list;
         public string Title
         {
             get { return title; }
@@ -34,21 +33,11 @@ namespace TestTask.Models
                 OnPropertyChanged("Type");
             }
         }
-        public string List
-        {
-            get { return list; }
-            set
-            {
-                list = value;
-                OnPropertyChanged("List");
-            }
-        }
 
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName] string prop = "")
         {
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(prop));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
         }
     }
 }
