@@ -29,7 +29,7 @@ namespace TestTask
             }
         }
 
-        public static AdditionalParameterType[] AdditionalParameterTypes = Enum.GetValues<AdditionalParameterType>();
+        public static AdditionalParameterType[] AdditionalParameterTypes => Enum.GetValues<AdditionalParameterType>();
 
         public static EnumToStringConverter<AdditionalParameterType> TypeToStringConverter { get; } =
             new EnumToStringConverter<AdditionalParameterType>(
@@ -48,7 +48,7 @@ namespace TestTask
                 return addCommand ??= new RelayCommand(obj =>
                   {
                       AdditionalParameter additionalParameter = new AdditionalParameter();
-                      AdditionalParameters.Insert(AdditionalParameters.Count, additionalParameter);
+                      AdditionalParameters.Insert(0, additionalParameter);
                       SelectedParameter = additionalParameter;
                   });
             }
