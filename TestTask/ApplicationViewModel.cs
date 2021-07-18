@@ -18,7 +18,7 @@ namespace TestTask
         IFileService fileService;
         IDialogService dialogService;
         public ObservableCollection<AdditionalParameter> AdditionalParameters { get; set; }
-        public List<AdditionalParameter> JsonData { get; set; }
+        public ObservableCollection<AdditionalParameter> JsonData { get; set; }
         public AdditionalParameter SelectedParameter
         {
             get { return selectedParameter; }
@@ -36,7 +36,7 @@ namespace TestTask
                 (AdditionalParameterType.String, "Простая строка"),
                 (AdditionalParameterType.StringWithHystory, "Строка с историей"),
                 (AdditionalParameterType.ListValue, "Значение из списка"),
-                (AdditionalParameterType.ListValueSet, "набор значений из списка")
+                (AdditionalParameterType.ListValueSet, "Набор значений из списка")
                 );
 
         // команда добавления нового объекта
@@ -124,15 +124,8 @@ namespace TestTask
             this.dialogService = dialogService;
             dialogService.FilePath = @"C:\Users\Matvey\source\repos\TestTask\TestTaskParametersData.json";
 
-            //JsonData = fileService.Open(dialogService.FilePath);
-            AdditionalParameters = new ObservableCollection<AdditionalParameter>
-            {
-                new AdditionalParameter {Title = "Параметр 1", Type = AdditionalParameterTypes.FirstOrDefault()},
-                new AdditionalParameter {Title = "Параметр 2", Type = AdditionalParameterTypes.FirstOrDefault()},
-                new AdditionalParameter {Title = "Параметр 3", Type = AdditionalParameterTypes.FirstOrDefault()},
-                new AdditionalParameter {Title = "Параметр 4", Type = AdditionalParameterTypes.FirstOrDefault()}
-            };
-            fileService.Save(dialogService.FilePath, AdditionalParameters);
+            JsonData = fileService.Open(dialogService.FilePath);
+            AdditionalParameters = JsonData;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
