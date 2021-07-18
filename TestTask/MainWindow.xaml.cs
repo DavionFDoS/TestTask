@@ -25,47 +25,15 @@ namespace TestTask
         public MainWindow()
         {
             InitializeComponent();
-            Types = new List<string>();
-            Types.Add("Простая строка");
-            Types.Add("Строка с историей");
-            Types.Add("Значение из списка");
-            Types.Add("Набор значений из списка");
-            DataContext = new ApplicationViewModel(new JsonFileService());
+            Types = new List<string>
+            {
+                "Простая строка",
+                "Строка с историей",
+                "Значение из списка",
+                "Набор значений из списка"
+            };
             comboBox_Type.ItemsSource = Types;
-        }
-
-        private void Button_Ok_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void Button_Cancel_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void button_Add_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void button_Up_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void button_Down_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void button_Remove_Click(object sender, RoutedEventArgs e)
-        {
-            //var selectedItems = grid_AdditionalParameters.SelectedItems;
-            //if(selectedItems != null)
-            //{
-            //    grid_AdditionalParameters.Items.Remove(selectedItems);
-            //}
+            DataContext = new ApplicationViewModel(new DefaultDialogService(), new JsonFileService());
         }
     }
 }

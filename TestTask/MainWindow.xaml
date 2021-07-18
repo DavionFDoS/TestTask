@@ -21,23 +21,23 @@
                 <ColumnDefinition Width ="*"/>
             </Grid.ColumnDefinitions>
             <Menu Grid.Column="0" VerticalAlignment="Center">
-                <MenuItem x:Name="button_Add" Click="button_Add_Click" Width="25" Height="25">
+                <MenuItem x:Name="Add" Width="25" Height="25" Command="{Binding AddCommand}">
                     <MenuItem.Icon>
                         <Image Source="/plus.png"></Image>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem x:Name="button_Up" Click="button_Up_Click" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="25" Height="25">
+                <MenuItem x:Name="Up" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="25" Height="25">
                     <MenuItem.Icon>
                         <Image Source="/up.png"></Image>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem x:Name="button_Down" Click="button_Down_Click" Width="25" Height="25">
+                <MenuItem x:Name="Down"  Width="25" Height="25">
                     <MenuItem.Icon>
                         <Image Source="/down.png"></Image>
                     </MenuItem.Icon>
                 </MenuItem>
                 <Separator Width="1" VerticalAlignment="Stretch" BorderBrush="Black" Background="Black" />
-                <MenuItem x:Name="button_Remove" Click="button_Remove_Click" Width="25" Height="25">
+                <MenuItem x:Name="Remove" Width="25" Height="25" Command="{Binding RemoveCommand}" CommandParameter="{Binding SelectedParameter}">
                     <MenuItem.Icon>
                         <Image Source="/red cross.jpg"></Image>
                     </MenuItem.Icon>
@@ -66,8 +66,8 @@
                 <ColumnDefinition Width ="0.2*"/>
                 <ColumnDefinition Width ="0.2*"/>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="1" x:Name="button_Ok" Content="Ок"  Click="Button_Ok_Click" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
-            <Button Grid.Column="2" x:Name="button_Cancel" Content="Отмена" Click="Button_Cancel_Click" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+            <Button Grid.Column="1" x:Name="button_Ok" Content="Ок" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
+            <Button Grid.Column="2" x:Name="button_Cancel" Content="Отмена" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
         </Grid>
     </Grid>
 </Window>

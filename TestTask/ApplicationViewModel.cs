@@ -16,6 +16,7 @@ namespace TestTask
     {
         private AdditionalParameter selectedParameter;
         IFileService fileService;
+        IDialogService dialogService;
         public ObservableCollection<AdditionalParameter> AdditionalParameters { get; set; }
         public AdditionalParameter SelectedParameter
         {
@@ -33,18 +34,84 @@ namespace TestTask
         {
             get
             {
-                return addCommand ??
-                  (addCommand = new RelayCommand(obj =>
+                return addCommand ??= new RelayCommand(obj =>
                   {
                       AdditionalParameter additionalParameter = new AdditionalParameter();
                       AdditionalParameters.Insert(0, additionalParameter);
                       SelectedParameter = additionalParameter;
+                  });
+            }
+        }
+
+        private RelayCommand removeCommand;
+        public RelayCommand RemoveCommand
+        {
+            get
+            {
+                return removeCommand ??= new RelayCommand(obj =>
+                    {
+                        AdditionalParameter additionalParameter = obj as AdditionalParameter;
+                        if (additionalParameter != null)
+                        {
+                            AdditionalParameters.Remove(additionalParameter);
+                        }
+                    },
+                    (obj) => AdditionalParameters.Count > 0);
+            }
+        }
+        // команда сохранения файла
+        private RelayCommand saveCommand;
+        public RelayCommand SaveCommand
+        {
+            get
+            {
+                return saveCommand ??
+                  (saveCommand = new RelayCommand(obj =>
+                  {
+                      try
+                      {
+                          if (dialogService.SaveFileDialog() == true)
+                          {
+                              fileService.Save(dialogService.FilePath, AdditionalParameters.ToList());
+                          }
+                      }
+                      catch (Exception)
+                      {
+                          throw;
+                      }
                   }));
             }
         }
-        public ApplicationViewModel(IFileService fileService)
+        // команда открытия файла
+        private RelayCommand openCommand;
+        public RelayCommand OpenCommand
+        {
+            get
+            {
+                return openCommand ??
+                  (openCommand = new RelayCommand(obj =>
+                  {
+                      try
+                      {
+                          if (dialogService.OpenFileDialog() == true)
+                          {
+                              var additionalParameters = fileService.Open(dialogService.FilePath);
+                              AdditionalParameters.Clear();
+                              foreach (var parameter in additionalParameters)
+                                  AdditionalParameters.Add(parameter);
+                          }
+                      }
+                      catch (Exception)
+                      {
+                          throw;
+                      }
+                  }));
+            }
+        }
+        public ApplicationViewModel(IDialogService dialogService, IFileService fileService)
         {
             this.fileService = fileService;
+            this.dialogService = dialogService;
             AdditionalParameters = new ObservableCollection<AdditionalParameter>
             {
                 new AdditionalParameter {Title="Параметр 1", Type ="Простая строка"},
