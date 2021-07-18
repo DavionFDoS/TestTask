@@ -38,12 +38,12 @@ namespace TestTask
                 return addCommand ??= new RelayCommand(obj =>
                   {
                       AdditionalParameter additionalParameter = new AdditionalParameter();
-                      AdditionalParameters.Insert(0, additionalParameter);
+                      AdditionalParameters.Insert(AdditionalParameters.Count, additionalParameter);
                       SelectedParameter = additionalParameter;
                   });
             }
         }
-
+        // команда удаления выбранного элемента
         private RelayCommand removeCommand;
         public RelayCommand RemoveCommand
         {
@@ -112,7 +112,7 @@ namespace TestTask
         {
             this.fileService = fileService;
             this.dialogService = dialogService;
-            //dialogService.FilePath = "ParametersData.json";
+            dialogService.FilePath = "ParametersData.json";
 
             //JsonData = fileService.Open(dialogService.FilePath);
             AdditionalParameters = new ObservableCollection<AdditionalParameter>
