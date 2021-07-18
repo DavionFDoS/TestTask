@@ -11,6 +11,10 @@ namespace TestTask
     public class DefaultDialogService : IDialogService
     {
         public string FilePath { get; set; }
+        public void ShowMessage(string message)
+        {
+            MessageBox.Show(message);
+        }
 
         public bool OpenFileDialog()
         {

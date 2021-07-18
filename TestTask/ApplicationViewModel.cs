@@ -18,6 +18,7 @@ namespace TestTask
         IFileService fileService;
         IDialogService dialogService;
         public ObservableCollection<AdditionalParameter> AdditionalParameters { get; set; }
+        public List<AdditionalParameter> JsonData { get; set; }
         public AdditionalParameter SelectedParameter
         {
             get { return selectedParameter; }
@@ -65,8 +66,7 @@ namespace TestTask
         {
             get
             {
-                return saveCommand ??
-                  (saveCommand = new RelayCommand(obj =>
+                return saveCommand ??= new RelayCommand(obj =>
                   {
                       try
                       {
@@ -79,7 +79,7 @@ namespace TestTask
                       {
                           throw;
                       }
-                  }));
+                  });
             }
         }
         // команда открытия файла
@@ -88,8 +88,7 @@ namespace TestTask
         {
             get
             {
-                return openCommand ??
-                  (openCommand = new RelayCommand(obj =>
+                return openCommand ??= new RelayCommand(obj =>
                   {
                       try
                       {
@@ -99,21 +98,23 @@ namespace TestTask
                               AdditionalParameters.Clear();
                               foreach (var parameter in additionalParameters)
                                   AdditionalParameters.Add(parameter);
+                              dialogService.ShowMessage("Файл открыт");
                           }
                       }
-                      catch (Exception)
+                      catch (Exception ex)
                       {
-                          throw;
+                          dialogService.ShowMessage(ex.Message);
                       }
-                  }));
+                  });
             }
         }
         public ApplicationViewModel(IDialogService dialogService, IFileService fileService)
         {
             this.fileService = fileService;
             this.dialogService = dialogService;
-            dialogService.FilePath = "ParametersData.json";
+            //dialogService.FilePath = "ParametersData.json";
 
+            //JsonData = fileService.Open(dialogService.FilePath);
             AdditionalParameters = new ObservableCollection<AdditionalParameter>
             {
                 new AdditionalParameter {Title="Параметр 1", Type ="Простая строка"},

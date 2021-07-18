@@ -44,7 +44,7 @@
                 </MenuItem>
             </Menu>
         </Grid>
-        <DataGrid x:Name="grid_AdditionalParameters" 
+        <DataGrid x:Name="grid_AdditionalParameters"
                   ItemsSource="{Binding AdditionalParameters}"
                   SelectedItem="{Binding SelectedParameter}"
                   AutoGenerateColumns="False" 
@@ -66,7 +66,7 @@
                 <ColumnDefinition Width ="0.2*"/>
                 <ColumnDefinition Width ="0.2*"/>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="1" x:Name="button_Ok" Content="Ок" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
+            <Button Grid.Column="1" x:Name="button_Ok" Command="{Binding OpenCommand}" Content="Ок" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
             <Button Grid.Column="2" x:Name="button_Cancel" Content="Отмена" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
         </Grid>
     </Grid>
