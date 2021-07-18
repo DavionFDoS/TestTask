@@ -112,6 +112,8 @@ namespace TestTask
         {
             this.fileService = fileService;
             this.dialogService = dialogService;
+            dialogService.FilePath = "ParametersData.json";
+
             AdditionalParameters = new ObservableCollection<AdditionalParameter>
             {
                 new AdditionalParameter {Title="Параметр 1", Type ="Простая строка"},
