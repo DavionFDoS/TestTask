@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TestTask"
-        xmlns:loc="clr-namespace:TestTask.Models"
+        xmlns:models ="clr-namespace:TestTask.Models"
         xmlns:col="clr-namespace:System.Collections;assembly=mscorlib"
         xmlns:sys="clr-namespace:System;assembly=mscorlib" d:DataContext="{d:DesignInstance Type=local:ApplicationViewModel}"
         mc:Ignorable="d"
@@ -53,11 +53,23 @@
                   VerticalAlignment="Top" 
                   VerticalScrollBarVisibility="Auto" 
                   SelectionMode="Extended">
+            <DataGrid.Resources>
+                <DataTemplate DataType="{x:Type models:AdditionalParameterType}">
+                    <TextBlock Text="{Binding Converter={x:Static local:ApplicationViewModel.TypeToStringConverter}}"></TextBlock>
+                </DataTemplate>
+            </DataGrid.Resources>
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Название" Width="*" Binding="{Binding Path=Title}"/>
-                <DataGridComboBoxColumn Header="Тип" Width="*" x:Name="comboBox_Type" 
+                <DataGridComboBoxColumn Header="Тип" Width="*" x:Name="comboBox_Type"
+                    ItemsSource="{x:Static local:ApplicationViewModel.AdditionalParameterTypes}"                    
                     SelectedValueBinding="{Binding Type, Mode=TwoWay}"/>
-                <DataGridTemplateColumn Width="*"/>
+                <DataGridTemplateColumn Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button>Список...</Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
         <Grid Grid.Row="2">

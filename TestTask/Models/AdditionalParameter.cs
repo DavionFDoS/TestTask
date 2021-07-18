@@ -10,11 +10,10 @@ using System.Windows.Controls;
 
 namespace TestTask.Models
 {
-    public partial class AdditionalParameter : INotifyPropertyChanged
+    public class AdditionalParameter : INotifyPropertyChanged
     {
-        //public int Id { get; set; }
         private string title;
-        private string type;
+        private AdditionalParameterType type;
         public string Title
         {
             get { return title; }
@@ -24,7 +23,7 @@ namespace TestTask.Models
                 OnPropertyChanged(nameof(Title));
             }
         }
-        public string Type
+        public AdditionalParameterType Type
         {
             get { return type; }
             set
@@ -33,7 +32,6 @@ namespace TestTask.Models
                 OnPropertyChanged(nameof(Type));
             }
         }
-
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName] string prop = "")
         {

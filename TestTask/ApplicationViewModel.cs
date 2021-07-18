@@ -29,6 +29,16 @@ namespace TestTask
             }
         }
 
+        public static AdditionalParameterType[] AdditionalParameterTypes = Enum.GetValues<AdditionalParameterType>();
+
+        public static EnumToStringConverter<AdditionalParameterType> TypeToStringConverter { get; } =
+            new EnumToStringConverter<AdditionalParameterType>(
+                (AdditionalParameterType.String, "Простая строка"),
+                (AdditionalParameterType.StringWithHystory, "Строка с историей"),
+                (AdditionalParameterType.ListValue, "Значение из списка"),
+                (AdditionalParameterType.ListValueSet, "набор значений из списка")
+                );
+
         // команда добавления нового объекта
         private RelayCommand addCommand;
         public RelayCommand AddCommand
@@ -117,10 +127,10 @@ namespace TestTask
             //JsonData = fileService.Open(dialogService.FilePath);
             AdditionalParameters = new ObservableCollection<AdditionalParameter>
             {
-                new AdditionalParameter {Title = "Параметр 1", Type = "Простая строка"},
-                new AdditionalParameter {Title = "Параметр 2", Type = "Строка с историей"},
-                new AdditionalParameter {Title = "Параметр 3", Type = "Значение из списка"},
-                new AdditionalParameter {Title = "Параметр 4", Type = "Набор значений из списка"}
+                new AdditionalParameter {Title = "Параметр 1", Type = AdditionalParameterTypes.FirstOrDefault()},
+                new AdditionalParameter {Title = "Параметр 2", Type = AdditionalParameterTypes.FirstOrDefault()},
+                new AdditionalParameter {Title = "Параметр 3", Type = AdditionalParameterTypes.FirstOrDefault()},
+                new AdditionalParameter {Title = "Параметр 4", Type = AdditionalParameterTypes.FirstOrDefault()}
             };
             fileService.Save(dialogService.FilePath, AdditionalParameters);
         }
