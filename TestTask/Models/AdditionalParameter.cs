@@ -21,7 +21,7 @@ namespace TestTask.Models
             set
             {
                 title = value;
-                OnPropertyChanged("Title");
+                OnPropertyChanged(nameof(Title));
             }
         }
         public string Type
@@ -30,7 +30,7 @@ namespace TestTask.Models
             set
             {
                 type = value;
-                OnPropertyChanged("Type");
+                OnPropertyChanged(nameof(Type));
             }
         }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,7 +10,7 @@ namespace TestTask
 {
     public interface IFileService
     {
-        List<AdditionalParameter> Open(string filename);
-        void Save(string filename, List<AdditionalParameter> additionalParameters);
+        ObservableCollection<AdditionalParameter> Open(string filename);
+        void Save(string filename, ObservableCollection<AdditionalParameter> additionalParameters);
     }
 }

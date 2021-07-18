@@ -25,7 +25,7 @@ namespace TestTask
             set
             {
                 selectedParameter = value;
-                OnPropertyChanged("AdditionalParameter");
+                OnPropertyChanged(nameof(SelectedParameter));
             }
         }
 
@@ -72,7 +72,7 @@ namespace TestTask
                       {
                           if (dialogService.SaveFileDialog() == true)
                           {
-                              fileService.Save(dialogService.FilePath, AdditionalParameters.ToList());
+                              fileService.Save(dialogService.FilePath, AdditionalParameters);
                           }
                       }
                       catch (Exception)
@@ -112,16 +112,17 @@ namespace TestTask
         {
             this.fileService = fileService;
             this.dialogService = dialogService;
-            dialogService.FilePath = "ParametersData.json";
+            dialogService.FilePath = @"C:\Users\Matvey\source\repos\TestTask\TestTaskParametersData.json";
 
             //JsonData = fileService.Open(dialogService.FilePath);
             AdditionalParameters = new ObservableCollection<AdditionalParameter>
             {
-                new AdditionalParameter {Title="Параметр 1", Type ="Простая строка"},
-                new AdditionalParameter {Title="Параметр 2", Type="Строка с историей"},
-                new AdditionalParameter {Title="Параметр 3", Type="Значение из списка"},
-                new AdditionalParameter {Title="Параметр 4", Type="Набор значений из списка"}
+                new AdditionalParameter {Title = "Параметр 1", Type = "Простая строка"},
+                new AdditionalParameter {Title = "Параметр 2", Type = "Строка с историей"},
+                new AdditionalParameter {Title = "Параметр 3", Type = "Значение из списка"},
+                new AdditionalParameter {Title = "Параметр 4", Type = "Набор значений из списка"}
             };
+            fileService.Save(dialogService.FilePath, AdditionalParameters);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

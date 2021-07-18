@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Json;
@@ -11,23 +12,23 @@ namespace TestTask
 {
     public class JsonFileService : IFileService
     {
-        public List<AdditionalParameter> Open(string filename)
+        public ObservableCollection<AdditionalParameter> Open(string filename)
         {
-            List<AdditionalParameter> additionalParameters = new List<AdditionalParameter>();
+            ObservableCollection<AdditionalParameter> additionalParameters = new ObservableCollection<AdditionalParameter>();
             DataContractJsonSerializer jsonFormatter =
-                new DataContractJsonSerializer(typeof(List<AdditionalParameter>));
+                new DataContractJsonSerializer(typeof(ObservableCollection<AdditionalParameter>));
             using (FileStream fs = new FileStream(filename, FileMode.OpenOrCreate))
             {
-                additionalParameters = jsonFormatter.ReadObject(fs) as List<AdditionalParameter>;
+                additionalParameters = jsonFormatter.ReadObject(fs) as ObservableCollection<AdditionalParameter>;
             }
 
             return additionalParameters;
         }
 
-        public void Save(string filename, List<AdditionalParameter> phonesList)
+        public void Save(string filename, ObservableCollection<AdditionalParameter> phonesList)
         {
             DataContractJsonSerializer jsonFormatter =
-                new DataContractJsonSerializer(typeof(List<AdditionalParameter>));
+                new DataContractJsonSerializer(typeof(ObservableCollection<AdditionalParameter>));
             using (FileStream fs = new FileStream(filename, FileMode.Create))
             {
                 jsonFormatter.WriteObject(fs, phonesList);
