@@ -83,6 +83,7 @@ namespace TestTask
                           //if (dialogService.SaveFileDialog() == true)
                           //{
                               fileService.Save(dialogService.FilePath, AdditionalParameters);
+                              dialogService.ShowMessage("Изменения сохранены");
                           //}
                       }
                       catch (Exception ex)
@@ -108,7 +109,7 @@ namespace TestTask
                               AdditionalParameters.Clear();
                               foreach (var parameter in additionalParameters)
                                   AdditionalParameters.Add(parameter);
-                              //dialogService.ShowMessage("Файл открыт");
+                              dialogService.ShowMessage("Изменения отменены");
                           //}
                       }
                       catch (Exception ex)

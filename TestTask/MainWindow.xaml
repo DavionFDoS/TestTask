@@ -52,7 +52,8 @@
                   HorizontalAlignment="Stretch" 
                   VerticalAlignment="Top" 
                   VerticalScrollBarVisibility="Auto" 
-                  SelectionMode="Extended">
+                  SelectionMode="Extended"
+                  CanUserAddRows="False">
             <DataGrid.Resources>
                 <DataTemplate DataType="{x:Type models:AdditionalParameterType}">
                     <TextBlock Text="{Binding Converter={x:Static local:ApplicationViewModel.TypeToStringConverter}}"></TextBlock>
@@ -66,7 +67,7 @@
                 <DataGridTemplateColumn Width="*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Background="White">Список...</Button>
+                            <Button Background="White" BorderBrush="White">Список...</Button>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
