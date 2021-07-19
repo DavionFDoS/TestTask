@@ -176,7 +176,7 @@ namespace TestTask
             }
         }
 
-        private void ShowMethod()
+        private static void ShowMethod()
         {
             ListWindow listWindow = new ListWindow();
             listWindow.Show();

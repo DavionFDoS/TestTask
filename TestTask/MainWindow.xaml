@@ -67,7 +67,7 @@
                 <DataGridTemplateColumn Width="*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Command="{Binding ShowCommand}" CommandParameter="{Binding SelectedParameter}" Background="White" BorderBrush="White">Список...</Button>
+                            <Button x:Name="button_ShowWindow" Command="{Binding ShowCommand, Mode=OneWay}" Background="White" BorderBrush="White">Список...</Button>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
