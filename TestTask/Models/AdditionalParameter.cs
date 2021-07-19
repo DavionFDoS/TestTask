@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -14,6 +15,7 @@ namespace TestTask.Models
     {
         private string title;
         private AdditionalParameterType type;
+        private ObservableCollection<string> parametersList;
         public string Title
         {
             get { return title; }
@@ -30,6 +32,16 @@ namespace TestTask.Models
             {
                 type = value;
                 OnPropertyChanged(nameof(Type));
+            }
+        }
+
+        public ObservableCollection<string> ParametersList
+        {
+            get { return parametersList; }
+            set
+            {
+                parametersList.Add(value.ToString());
+                OnPropertyChanged(nameof(ParametersList));
             }
         }
         public event PropertyChangedEventHandler PropertyChanged;

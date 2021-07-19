@@ -9,13 +9,10 @@
   <ItemGroup>
     <None Remove="cross-mark.jpg" />
     <None Remove="down.png" />
+    <None Remove="heart.ico" />
     <None Remove="plus.png" />
     <None Remove="red cross.jpg" />
     <None Remove="up.png" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Icons\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -27,6 +24,7 @@
   <ItemGroup>
     <Resource Include="cross-mark.jpg" />
     <Resource Include="down.png" />
+    <Resource Include="heart.ico" />
     <Resource Include="plus.png" />
     <Resource Include="red cross.jpg" />
     <Resource Include="up.png" />
