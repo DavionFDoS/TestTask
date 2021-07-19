@@ -80,14 +80,14 @@ namespace TestTask
                   {
                       try
                       {
-                          if (dialogService.SaveFileDialog() == true)
-                          {
+                          //if (dialogService.SaveFileDialog() == true)
+                          //{
                               fileService.Save(dialogService.FilePath, AdditionalParameters);
-                          }
+                          //}
                       }
-                      catch (Exception)
+                      catch (Exception ex)
                       {
-                          throw;
+                          dialogService.ShowMessage(ex.Message);
                       }
                   });
             }
@@ -102,14 +102,14 @@ namespace TestTask
                   {
                       try
                       {
-                          if (dialogService.OpenFileDialog() == true)
-                          {
+                          //if (dialogService.OpenFileDialog() == true)
+                          //{
                               var additionalParameters = fileService.Open(dialogService.FilePath);
                               AdditionalParameters.Clear();
                               foreach (var parameter in additionalParameters)
                                   AdditionalParameters.Add(parameter);
-                              dialogService.ShowMessage("Файл открыт");
-                          }
+                              //dialogService.ShowMessage("Файл открыт");
+                          //}
                       }
                       catch (Exception ex)
                       {
@@ -118,6 +118,45 @@ namespace TestTask
                   });
             }
         }
+
+        // команда перемещения вверх
+        private RelayCommand moveUpCommand;
+        public RelayCommand MoveUpCommand
+        {
+            get
+            {
+                return moveUpCommand ??= new RelayCommand(obj =>
+                {
+                    AdditionalParameter additionalParameter = obj as AdditionalParameter;
+                    if (additionalParameter != null)
+                    {
+                        int currentIndex = AdditionalParameters.IndexOf(additionalParameter);
+                        AdditionalParameters.Move(currentIndex, currentIndex - 1);
+                    }
+                },
+                    (obj) => obj != AdditionalParameters[0]);
+            }
+        }
+
+        // команда перемещения вниз
+        private RelayCommand moveDownCommand;
+        public RelayCommand MoveDownCommand
+        {
+            get
+            {
+                return moveDownCommand ??= new RelayCommand(obj =>
+                {
+                    AdditionalParameter additionalParameter = obj as AdditionalParameter;
+                    if (additionalParameter != null)
+                    {
+                        int currentIndex = AdditionalParameters.IndexOf(additionalParameter);
+                        AdditionalParameters.Move(currentIndex, currentIndex + 1);
+                    }
+                },
+                    (obj) => obj != AdditionalParameters[AdditionalParameters.Count-1]);
+            }
+        }
+
         public ApplicationViewModel(IDialogService dialogService, IFileService fileService)
         {
             this.fileService = fileService;
