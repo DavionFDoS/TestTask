@@ -60,11 +60,10 @@ namespace TestTask
             get
             {
                 return removeCommand ??= new RelayCommand(obj =>
-                    {
-                        AdditionalParameter additionalParameter = obj as AdditionalParameter;
-                        if (additionalParameter != null)
+                    {                   
+                        if (selectedParameter != null)
                         {
-                            AdditionalParameters.Remove(additionalParameter);
+                            AdditionalParameters.Remove(selectedParameter);
                         }
                     },
                     (obj) => AdditionalParameters.Count > 0);
@@ -128,10 +127,9 @@ namespace TestTask
             {
                 return moveUpCommand ??= new RelayCommand(obj =>
                 {
-                    AdditionalParameter additionalParameter = obj as AdditionalParameter;
-                    if (additionalParameter != null)
+                    if (selectedParameter != null)
                     {
-                        int currentIndex = AdditionalParameters.IndexOf(additionalParameter);
+                        int currentIndex = AdditionalParameters.IndexOf(selectedParameter);
                         AdditionalParameters.Move(currentIndex, currentIndex - 1);
                     }
                 },
@@ -147,15 +145,41 @@ namespace TestTask
             {
                 return moveDownCommand ??= new RelayCommand(obj =>
                 {
-                    AdditionalParameter additionalParameter = obj as AdditionalParameter;
-                    if (additionalParameter != null)
+                    if (selectedParameter != null)
                     {
-                        int currentIndex = AdditionalParameters.IndexOf(additionalParameter);
+                        int currentIndex = AdditionalParameters.IndexOf(selectedParameter);
                         AdditionalParameters.Move(currentIndex, currentIndex + 1);
                     }
                 },
-                    (obj) => obj != AdditionalParameters[AdditionalParameters.Count-1]);
+                    (obj) => obj != AdditionalParameters[AdditionalParameters.Count - 1]);
             }
+        }
+
+        // команда показа окна списка
+        private RelayCommand showCommand;
+        public RelayCommand ShowCommand
+        {
+            get
+            {
+                return showCommand ??= new RelayCommand(obj =>
+                {
+                    if (selectedParameter != null)
+                    {         
+                            ShowMethod();
+                    }
+                },
+                    (obj) => 
+                    { 
+                        bool canBeShown = selectedParameter.Type is AdditionalParameterType.ListValue or AdditionalParameterType.ListValueSet;
+                        return canBeShown;
+                    });
+            }
+        }
+
+        private void ShowMethod()
+        {
+            ListWindow listWindow = new ListWindow();
+            listWindow.Show();
         }
 
         public ApplicationViewModel(IDialogService dialogService, IFileService fileService)
