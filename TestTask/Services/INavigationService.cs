@@ -7,7 +7,7 @@ using TestTask.ViewModels;
 
 namespace TestTask.Services
 {
-    public interface INavigation
+    public interface INavigationService
     {
         void NavigateTo(BaseViewModel viewModel);
     }
