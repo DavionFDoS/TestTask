@@ -9,26 +9,18 @@ using System.Threading.Tasks;
 using TestTask.Models;
 using System.Windows;
 using System.Windows.Controls;
+using TestTask.ViewModels;
+using System.Windows.Input;
+using TestTask.Services;
 
 namespace TestTask
 {
-    public class ApplicationViewModel : INotifyPropertyChanged
+    public class ApplicationViewModel : BaseViewModel
     {
-        private AdditionalParameter selectedParameter;
-        IFileService fileService;
-        IDialogService dialogService;
-        public ObservableCollection<AdditionalParameter> AdditionalParameters { get; set; }
-        public ObservableCollection<AdditionalParameter> JsonData { get; set; }
-        public AdditionalParameter SelectedParameter
-        {
-            get { return selectedParameter; }
-            set
-            {
-                selectedParameter = value;
-                OnPropertyChanged(nameof(SelectedParameter));
-            }
-        }
-
+        private readonly INavigationService navigation;
+        private readonly IFileService fileService;
+        private readonly IDialogService dialogService;
+        public ObservableCollection<AdditionalParameterViewModel> AdditionalParameters { get; set; }
         public static AdditionalParameterType[] AdditionalParameterTypes => Enum.GetValues<AdditionalParameterType>();
 
         public static EnumToStringConverter<AdditionalParameterType> TypeToStringConverter { get; } =
@@ -40,38 +32,35 @@ namespace TestTask
                 );
 
         // команда добавления нового объекта
-        private RelayCommand addCommand;
-        public RelayCommand AddCommand
+        private ICommand addCommand;
+        public ICommand AddCommand
         {
             get
             {
                 return addCommand ??= new RelayCommand(obj =>
                   {
-                      AdditionalParameter additionalParameter = new AdditionalParameter();
-                      AdditionalParameters.Insert(0, additionalParameter);
-                      SelectedParameter = additionalParameter;
+                      AdditionalParameters.Insert(0, new AdditionalParameterViewModel(new AdditionalParameter(), navigation));
                   });
             }
         }
         // команда удаления выбранного элемента
-        private RelayCommand removeCommand;
-        public RelayCommand RemoveCommand
+        private ICommand removeCommand;
+        public ICommand RemoveCommand
         {
             get
             {
                 return removeCommand ??= new RelayCommand(obj =>
-                    {                   
-                        if (selectedParameter != null)
-                        {
-                            AdditionalParameters.Remove(selectedParameter);
-                        }
+                    {
+                        if (obj is AdditionalParameterViewModel parameter)
+                            AdditionalParameters.Remove(parameter);
+
                     },
                     (obj) => AdditionalParameters.Count > 0);
             }
         }
         // команда сохранения файла
-        private RelayCommand saveCommand;
-        public RelayCommand SaveCommand
+        private ICommand saveCommand;
+        public ICommand SaveCommand
         {
             get
             {
@@ -81,7 +70,7 @@ namespace TestTask
                       {
                           //if (dialogService.SaveFileDialog() == true)
                           //{
-                              fileService.Save(dialogService.FilePath, AdditionalParameters);
+                              fileService.Save(dialogService.FilePath, AdditionalParameters.Select(vm => vm.Model).ToList());
                               dialogService.ShowMessage("Изменения сохранены");
                           //}
                       }
@@ -93,8 +82,8 @@ namespace TestTask
             }
         }
         // команда открытия файла
-        private RelayCommand openCommand;
-        public RelayCommand OpenCommand
+        private ICommand openCommand;
+        public ICommand OpenCommand
         {
             get
             {
@@ -107,7 +96,7 @@ namespace TestTask
                               var additionalParameters = fileService.Open(dialogService.FilePath);
                               AdditionalParameters.Clear();
                               foreach (var parameter in additionalParameters)
-                                  AdditionalParameters.Add(parameter);
+                                  AdditionalParameters.Add(new AdditionalParameterViewModel(parameter, navigation));
                               dialogService.ShowMessage("Изменения отменены");
                           //}
                       }
@@ -120,38 +109,39 @@ namespace TestTask
         }
 
         // команда перемещения вверх
-        private RelayCommand moveUpCommand;
-        public RelayCommand MoveUpCommand
+        private ICommand moveUpCommand;
+        public ICommand MoveUpCommand
         {
             get
             {
                 return moveUpCommand ??= new RelayCommand(obj =>
                 {
-                    if (selectedParameter != null)
+                    if (obj is AdditionalParameterViewModel parameter)
                     {
-                        int currentIndex = AdditionalParameters.IndexOf(selectedParameter);
+                        int currentIndex = AdditionalParameters.IndexOf(parameter);
                         AdditionalParameters.Move(currentIndex, currentIndex - 1);
                     }
+                        
                 },
-                    (obj) => obj != AdditionalParameters[0] || AdditionalParameters.Count >= 1);
+                    (obj) => obj != AdditionalParameters?.First() || AdditionalParameters.Count > 0);
             }
         }
 
         // команда перемещения вниз
-        private RelayCommand moveDownCommand;
-        public RelayCommand MoveDownCommand
+        private ICommand moveDownCommand;
+        public ICommand MoveDownCommand
         {
             get
             {
                 return moveDownCommand ??= new RelayCommand(obj =>
                 {
-                    if (selectedParameter != null)
+                    if (obj is AdditionalParameterViewModel parameter)
                     {
-                        int currentIndex = AdditionalParameters.IndexOf(selectedParameter);
+                        int currentIndex = AdditionalParameters.IndexOf(parameter);
                         AdditionalParameters.Move(currentIndex, currentIndex + 1);
                     }
                 },
-                    (obj) => obj != AdditionalParameters[AdditionalParameters.Count - 1] || AdditionalParameters.Count >= 1);
+                    (obj) => obj != AdditionalParameters?.Last() || AdditionalParameters.Count > 0);
             }
         }
 
@@ -160,15 +150,7 @@ namespace TestTask
             this.fileService = fileService;
             this.dialogService = dialogService;
             dialogService.FilePath = @"C:\Users\Matvey\source\repos\TestTask\TestTaskParametersData.json";
-
-            JsonData = fileService.Open(dialogService.FilePath);
-            AdditionalParameters = JsonData;
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        public void OnPropertyChanged([CallerMemberName] string prop = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
+            AdditionalParameters = (ObservableCollection<AdditionalParameterViewModel>)fileService.Open(dialogService.FilePath);
         }
     }
 }

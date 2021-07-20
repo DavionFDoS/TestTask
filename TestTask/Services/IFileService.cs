@@ -10,7 +10,7 @@ namespace TestTask
 {
     public interface IFileService
     {
-        ObservableCollection<AdditionalParameter> Open(string filename);
-        void Save(string filename, ObservableCollection<AdditionalParameter> additionalParameters);
+        IList<AdditionalParameter> Open(string filename);
+        void Save(string filename, IList<AdditionalParameter> additionalParameters);
     }
 }
