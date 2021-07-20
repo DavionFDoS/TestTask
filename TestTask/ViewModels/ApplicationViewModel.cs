@@ -133,7 +133,7 @@ namespace TestTask
                         AdditionalParameters.Move(currentIndex, currentIndex - 1);
                     }
                 },
-                    (obj) => obj != AdditionalParameters[0]);
+                    (obj) => obj != AdditionalParameters[0] || AdditionalParameters.Count >= 1);
             }
         }
 
@@ -151,7 +151,7 @@ namespace TestTask
                         AdditionalParameters.Move(currentIndex, currentIndex + 1);
                     }
                 },
-                    (obj) => obj != AdditionalParameters[AdditionalParameters.Count - 1]);
+                    (obj) => obj != AdditionalParameters[AdditionalParameters.Count - 1] || AdditionalParameters.Count >= 1);
             }
         }
 

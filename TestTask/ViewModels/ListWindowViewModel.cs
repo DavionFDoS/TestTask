@@ -13,7 +13,8 @@ namespace TestTask
     public class ListWindowViewModel : INotifyPropertyChanged
     {
         private AdditionalParameter selectedParameter;
-        public ObservableCollection<AdditionalParameter> AdditionalParameters { get; set; }
+
+        private List<string> parameters { get; set; }
         public AdditionalParameter SelectedParameter
         {
             get { return selectedParameter; }
@@ -115,6 +116,10 @@ namespace TestTask
                 },
                     (obj) => obj != AdditionalParameters[AdditionalParameters.Count - 1]);
             }
+        }
+        
+        public ListWindowViewModel()
+        {
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

@@ -11,44 +11,11 @@ using System.Windows.Controls;
 
 namespace TestTask.Models
 {
-    public class AdditionalParameter : INotifyPropertyChanged
+    public class AdditionalParameter
     {
-        private string title;
-        private AdditionalParameterType type;
-        private List<string> parametersList;
-        public string Title
-        {
-            get { return title; }
-            set
-            {
-                title = value;
-                OnPropertyChanged(nameof(Title));
-            }
-        }
-        public AdditionalParameterType Type
-        {
-            get { return type; }
-            set
-            {
-                type = value;
-                OnPropertyChanged(nameof(Type));
-            }
-        }
+        public string Title { get; set; }
+        public AdditionalParameterType Type { get; set; }
 
-        public List<string> ParametersList
-        {
-            get { return parametersList; }
-            set
-            {
-                parametersList = value;
-                OnPropertyChanged(nameof(ParametersList));
-            }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        public void OnPropertyChanged([CallerMemberName] string prop = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
-        }
+        public List<string> ParametersList { get; set; }
     }
 }
