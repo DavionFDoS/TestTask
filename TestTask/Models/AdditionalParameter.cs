@@ -15,7 +15,7 @@ namespace TestTask.Models
     {
         private string title;
         private AdditionalParameterType type;
-        //private ObservableCollection<string> parametersList;
+        private List<string> parametersList;
         public string Title
         {
             get { return title; }
@@ -35,15 +35,16 @@ namespace TestTask.Models
             }
         }
 
-        //public ObservableCollection<string> ParametersList
-        //{
-        //    get { return parametersList; }
-        //    set
-        //    {
-        //        parametersList.Add(value.ToString());
-        //        OnPropertyChanged(nameof(ParametersList));
-        //    }
-        //}
+        public List<string> ParametersList
+        {
+            get { return parametersList; }
+            set
+            {
+                parametersList = value;
+                OnPropertyChanged(nameof(ParametersList));
+            }
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName] string prop = "")
         {

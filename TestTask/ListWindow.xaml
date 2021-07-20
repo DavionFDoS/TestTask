@@ -3,9 +3,11 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:TestTask"
+        xmlns:local="clr-namespace:TestTask" 
+        xmlns:models ="clr-namespace:TestTask.Models"
+        d:DataContext="{d:DesignInstance Type=local:ListWindowViewModel}"
         mc:Ignorable="d"
-        Title="Список" Height="300" Width="300" Icon="/heart.ico">
+        Title="Список" Height="300" Width="300" Icon="/heart.ico" Name="listWindow">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="0.05*" />
@@ -28,10 +30,10 @@
             <StackPanel Grid.Column="0" VerticalAlignment="Top">
             </StackPanel>
             <StackPanel Grid.Column="1">
-                <Button Height="20" HorizontalAlignment="Stretch" Content="Вверх" Margin="5"></Button>
-                <Button Height="20" HorizontalAlignment="Stretch" Content="Вниз" Margin="5"></Button>
-                <Button Height="20" HorizontalAlignment="Stretch" Content="Удалить" Margin="5"></Button>
-                <Button Height="20" HorizontalAlignment="Stretch" Content="Добавить" Margin="5"></Button>
+                <Button Height="20" HorizontalAlignment="Stretch" Content="Вверх" Command="{Binding MoveUpInWindowCommand}" Margin="5"></Button>
+                <Button Height="20" HorizontalAlignment="Stretch" Content="Вниз" Command="{Binding MoveDownInWindowCommand}" Margin="5"></Button>
+                <Button Height="20" HorizontalAlignment="Stretch" Content="Удалить" Command="{Binding RemoveInWindowCommand}" Margin="5"></Button>
+                <Button Height="20" HorizontalAlignment="Stretch" Content="Добавить" Command="{Binding AddInWindowCommand}" Margin="5"></Button>
                 <Button Height="20" HorizontalAlignment="Stretch" Content="Изменить" Margin="5"></Button>
             </StackPanel>
             <StackPanel Grid.Column="1" VerticalAlignment="Bottom">
