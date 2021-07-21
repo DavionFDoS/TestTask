@@ -12,7 +12,7 @@ namespace TestTask
 {
     public class JsonFileService : IFileService
     {
-        public ObservableCollection<AdditionalParameter> Open(string filename)
+        public IList<AdditionalParameter> Open(string filename)
         {
             ObservableCollection<AdditionalParameter> additionalParameters = new ObservableCollection<AdditionalParameter>();
             DataContractJsonSerializer jsonFormatter =
@@ -25,7 +25,7 @@ namespace TestTask
             return additionalParameters;
         }
 
-        public void Save(string filename, ObservableCollection<AdditionalParameter> phonesList)
+        public void Save(string filename, IList<AdditionalParameter> phonesList)
         {
             DataContractJsonSerializer jsonFormatter =
                 new DataContractJsonSerializer(typeof(ObservableCollection<AdditionalParameter>));

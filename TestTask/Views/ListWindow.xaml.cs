@@ -22,7 +22,6 @@ namespace TestTask
         public ListWindow()
         {
             InitializeComponent();
-            DataContext = new ListWindowViewModel();
         }
     }
 }

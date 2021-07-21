@@ -5,8 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TestTask"
         xmlns:models ="clr-namespace:TestTask.Models"
-        xmlns:col="clr-namespace:System.Collections;assembly=mscorlib"
-        xmlns:sys="clr-namespace:System;assembly=mscorlib" d:DataContext="{d:DesignInstance Type=local:ApplicationViewModel}"
+        xmlns:vm ="clr-namespace:TestTask.ViewModels" d:DataContext="{d:DesignInstance Type=vm:ApplicationViewModel}"
         mc:Ignorable="d"
         Title="Дополнительные параметры" Height="650" Width="700">
     <Grid>
@@ -26,18 +25,18 @@
                         <Image Source="/plus.png"></Image>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem x:Name="Up" Width="25" Height="25" Command="{Binding MoveUpCommand}" CommandParameter="{Binding SelectedParameter}">
+                <MenuItem x:Name="Up" Width="25" Height="25" Command="{Binding MoveUpCommand}" CommandParameter="{Binding ElementName=grid_AdditionalParameters, Path=SelectedItem}">
                     <MenuItem.Icon>
                         <Image Source="/up.png"></Image>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem x:Name="Down"  Width="25" Height="25" Command="{Binding MoveDownCommand}" CommandParameter="{Binding SelectedParameter}">
+                <MenuItem x:Name="Down" Width="25" Height="25" Command="{Binding MoveDownCommand}" CommandParameter="{Binding ElementName=grid_AdditionalParameters, Path=SelectedItem}">
                     <MenuItem.Icon>
                         <Image Source="/down.png"></Image>
                     </MenuItem.Icon>
                 </MenuItem>
                 <Separator Width="1" VerticalAlignment="Stretch" BorderBrush="Black" Background="Black" />
-                <MenuItem x:Name="Remove" Width="25" Height="25" Command="{Binding RemoveCommand}" CommandParameter="{Binding SelectedParameter}">
+                <MenuItem x:Name="Remove" Width="25" Height="25" Command="{Binding RemoveCommand}" CommandParameter="{Binding ElementName=grid_AdditionalParameters, Path=SelectedItem}">
                     <MenuItem.Icon>
                         <Image Source="/red cross.jpg"></Image>
                     </MenuItem.Icon>
@@ -46,7 +45,6 @@
         </Grid>
         <DataGrid x:Name="grid_AdditionalParameters"
                   ItemsSource="{Binding AdditionalParameters}"
-                  SelectedItem="{Binding SelectedParameter}"
                   AutoGenerateColumns="False" 
                   Grid.Row="1" 
                   HorizontalAlignment="Stretch" 
@@ -63,11 +61,11 @@
                 <DataGridTextColumn Header="Название" Width="*" Binding="{Binding Path=Title}"/>
                 <DataGridComboBoxColumn Header="Тип" Width="*" x:Name="comboBox_Type"
                     ItemsSource="{x:Static local:ApplicationViewModel.AdditionalParameterTypes}"                    
-                    SelectedValueBinding="{Binding Type, Mode=TwoWay}"/>
+                    SelectedValueBinding="{Binding Type, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"/>
                 <DataGridTemplateColumn Width="*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button x:Name="button_ShowWindow" Command="{Binding ListWindowViewModel.ShowWindowCommand}" CommandParameter="{Binding}" Background="White" BorderBrush="White">Список...</Button>
+                            <Button x:Name="button_ShowWindow" Command="{Binding EditStringListCommand}" Background="White" BorderBrush="White">Список...</Button>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>

@@ -13,6 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using TestTask.Models;
+using TestTask.Services;
+using TestTask.ViewModels;
 
 namespace TestTask
 {
@@ -24,7 +26,7 @@ namespace TestTask
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new ApplicationViewModel(new DefaultDialogService(), new JsonFileService());
+            DataContext = new ApplicationViewModel(new DefaultDialogService(), new JsonFileService(), new DefaultNavigationService());
         }
     }
 }

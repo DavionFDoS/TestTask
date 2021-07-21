@@ -9,11 +9,10 @@ using System.Threading.Tasks;
 using TestTask.Models;
 using System.Windows;
 using System.Windows.Controls;
-using TestTask.ViewModels;
 using System.Windows.Input;
 using TestTask.Services;
 
-namespace TestTask
+namespace TestTask.ViewModels
 {
     public class ApplicationViewModel : BaseViewModel
     {
@@ -68,11 +67,8 @@ namespace TestTask
                   {
                       try
                       {
-                          //if (dialogService.SaveFileDialog() == true)
-                          //{
-                              fileService.Save(dialogService.FilePath, AdditionalParameters.Select(vm => vm.Model).ToList());
+                          fileService.Save(dialogService.FilePath, (IList<Models.AdditionalParameter>)AdditionalParameters);
                               dialogService.ShowMessage("Изменения сохранены");
-                          //}
                       }
                       catch (Exception ex)
                       {
@@ -91,14 +87,11 @@ namespace TestTask
                   {
                       try
                       {
-                          //if (dialogService.OpenFileDialog() == true)
-                          //{
-                              var additionalParameters = fileService.Open(dialogService.FilePath);
+                              var additionalParameters = (ObservableCollection<AdditionalParameterViewModel>)fileService.Open(dialogService.FilePath);
                               AdditionalParameters.Clear();
                               foreach (var parameter in additionalParameters)
-                                  AdditionalParameters.Add(new AdditionalParameterViewModel(parameter, navigation));
+                              AdditionalParameters.Add(parameter);
                               dialogService.ShowMessage("Изменения отменены");
-                          //}
                       }
                       catch (Exception ex)
                       {
@@ -145,10 +138,11 @@ namespace TestTask
             }
         }
 
-        public ApplicationViewModel(IDialogService dialogService, IFileService fileService)
+        public ApplicationViewModel(IDialogService dialogService, IFileService fileService, INavigationService navigation)
         {
             this.fileService = fileService;
             this.dialogService = dialogService;
+            this.navigation = navigation;
             dialogService.FilePath = @"C:\Users\Matvey\source\repos\TestTask\TestTaskParametersData.json";
             AdditionalParameters = (ObservableCollection<AdditionalParameterViewModel>)fileService.Open(dialogService.FilePath);
         }
