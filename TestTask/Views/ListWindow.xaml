@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:TestTask" 
         xmlns:vm ="clr-namespace:TestTask.ViewModels"
         xmlns:models ="clr-namespace:TestTask.Models"
-        d:DataContext="{d:DesignInstance Type=vm:AdditionalParameter}"
+        d:DataContext="{d:DesignInstance Type=vm:ApplicationViewModel}"
         mc:Ignorable="d"
         Title="Список" Height="300" Width="300" Icon="/heart.ico" Name="listWindow">
     <Grid>

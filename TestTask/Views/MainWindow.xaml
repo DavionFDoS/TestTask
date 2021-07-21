@@ -54,18 +54,18 @@
                   CanUserAddRows="False">
             <DataGrid.Resources>
                 <DataTemplate DataType="{x:Type models:AdditionalParameterType}">
-                    <TextBlock Text="{Binding Converter={x:Static local:ApplicationViewModel.TypeToStringConverter}}"></TextBlock>
+                    <TextBlock Text="{Binding Converter={x:Static vm:ApplicationViewModel.}}"></TextBlock>
                 </DataTemplate>
             </DataGrid.Resources>
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Название" Width="*" Binding="{Binding Path=Title}"/>
                 <DataGridComboBoxColumn Header="Тип" Width="*" x:Name="comboBox_Type"
-                    ItemsSource="{x:Static local:ApplicationViewModel.AdditionalParameterTypes}"                    
+                    ItemsSource="{x:Static vm:ApplicationViewModel.AdditionalParameterTypes}"                    
                     SelectedValueBinding="{Binding Type, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"/>
                 <DataGridTemplateColumn Width="*">
                     <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <Button x:Name="button_ShowWindow" Command="{Binding EditStringListCommand}" Background="White" BorderBrush="White">Список...</Button>
+                        <DataTemplate DataType="{x:Type vm:AdditionalParameterViewModel}">
+                            <Button x:Name="button_ShowWindow" Command="{Binding ShowListWindowCommand}" Background="White" BorderBrush="White">Список...</Button>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
