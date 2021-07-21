@@ -67,7 +67,7 @@ namespace TestTask.ViewModels
                   {
                       try
                       {
-                          fileService.Save(dialogService.FilePath, (IList<Models.AdditionalParameter>)AdditionalParameters);
+                          fileService.Save(dialogService.FilePath, AdditionalParameters.Select(vm => vm.Model).ToList());
                               dialogService.ShowMessage("Изменения сохранены");
                       }
                       catch (Exception ex)
@@ -87,10 +87,10 @@ namespace TestTask.ViewModels
                   {
                       try
                       {
-                              var additionalParameters = (ObservableCollection<AdditionalParameterViewModel>)fileService.Open(dialogService.FilePath);
+                              var additionalParameters = fileService.Open(dialogService.FilePath);
                               AdditionalParameters.Clear();
                               foreach (var parameter in additionalParameters)
-                              AdditionalParameters.Add(parameter);
+                              AdditionalParameters.Add(new AdditionalParameterViewModel(parameter, navigation));
                               dialogService.ShowMessage("Изменения отменены");
                       }
                       catch (Exception ex)
@@ -144,7 +144,8 @@ namespace TestTask.ViewModels
             this.dialogService = dialogService;
             this.navigation = navigation;
             dialogService.FilePath = @"C:\Users\Matvey\source\repos\TestTask\TestTaskParametersData.json";
-            AdditionalParameters = (ObservableCollection<AdditionalParameterViewModel>)fileService.Open(dialogService.FilePath);
+            AdditionalParameters = new ObservableCollection<AdditionalParameterViewModel>(
+                fileService.Open(dialogService.FilePath).Select(m=> new AdditionalParameterViewModel(m,navigation)));
         }
     }
 }

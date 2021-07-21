@@ -5,12 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TestTask.Models;
+using TestTask.ViewModels;
 
 namespace TestTask
 {
     public interface IFileService
     {
-        IList<AdditionalParameter> Open(string filename);
+        ObservableCollection<AdditionalParameter> Open(string filename);
         void Save(string filename, IList<AdditionalParameter> additionalParameters);
     }
 }

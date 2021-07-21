@@ -4,11 +4,10 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TestTask" 
-        xmlns:vm ="clr-namespace:TestTask.ViewModels"
-        xmlns:models ="clr-namespace:TestTask.Models"
-        d:DataContext="{d:DesignInstance Type=vm:ApplicationViewModel}"
-        mc:Ignorable="d"
-        Title="Список" Height="300" Width="300" Icon="/heart.ico" Name="listWindow">
+        xmlns:models="clr-namespace:TestTask.Models"
+        xmlns:vm="clr-namespace:TestTask.ViewModels" 
+        mc:Ignorable="d" WindowStartupLocation="CenterOwner"
+        Title="Список" Height="300" Width="300" Icon="/Icons/heart.ico" x:Name="listWindow">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="0.05*" />
@@ -29,19 +28,20 @@
                 <ColumnDefinition Width ="0.3*"/>
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Column="0" VerticalAlignment="Top">
-                <DataGrid ItemsSource="{Binding Path=StringList}"></DataGrid>
+                <DataGrid ItemsSource="{Binding Path=StringList}">
+                </DataGrid>
             </StackPanel>
             <StackPanel Grid.Column="1">
                 <Button Height="20" HorizontalAlignment="Stretch" Content="Вверх" Command="{Binding MoveUpInWindowCommand}" Margin="5"></Button>
                 <Button Height="20" HorizontalAlignment="Stretch" Content="Вниз" Command="{Binding MoveDownInWindowCommand}" Margin="5"></Button>
                 <Button Height="20" HorizontalAlignment="Stretch" Content="Удалить" Command="{Binding RemoveInWindowCommand}" Margin="5"></Button>
                 <Button Height="20" HorizontalAlignment="Stretch" Content="Добавить" Command="{Binding AddInWindowCommand}" Margin="5"></Button>
+                <Button Height="20" HorizontalAlignment="Stretch" Content="Изменить" Margin="5"></Button>
             </StackPanel>
             <StackPanel Grid.Column="1" VerticalAlignment="Bottom">
                 <Button Height="20" HorizontalAlignment="Stretch" Content="Ок" Margin="5"></Button>
                 <Button Height="20" HorizontalAlignment="Stretch" Content="Отмена" Margin="5"></Button>
             </StackPanel>
-            
         </Grid>
     </Grid>
 </Window>

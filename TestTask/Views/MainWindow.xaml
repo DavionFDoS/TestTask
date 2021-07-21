@@ -22,23 +22,26 @@
             <Menu Grid.Column="0" VerticalAlignment="Center">
                 <MenuItem x:Name="Add" Width="25" Height="25" Command="{Binding AddCommand}">
                     <MenuItem.Icon>
-                        <Image Source="/plus.png"></Image>
+                        <Image Source="/Icons/plus.png"></Image>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem x:Name="Up" Width="25" Height="25" Command="{Binding MoveUpCommand}" CommandParameter="{Binding ElementName=grid_AdditionalParameters, Path=SelectedItem}">
+                <MenuItem x:Name="Up" Width="25" Height="25" Command="{Binding MoveUpCommand}" 
+                          CommandParameter="{Binding ElementName=grid_AdditionalParameters, Path=SelectedItem}">
                     <MenuItem.Icon>
-                        <Image Source="/up.png"></Image>
+                        <Image Source="/Icons/up.png"></Image>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem x:Name="Down" Width="25" Height="25" Command="{Binding MoveDownCommand}" CommandParameter="{Binding ElementName=grid_AdditionalParameters, Path=SelectedItem}">
+                <MenuItem x:Name="Down"  Width="25" Height="25" Command="{Binding MoveDownCommand}" 
+                          CommandParameter="{Binding ElementName=grid_AdditionalParameters, Path=SelectedItem}">
                     <MenuItem.Icon>
-                        <Image Source="/down.png"></Image>
+                        <Image Source="/Icons/down.png"></Image>
                     </MenuItem.Icon>
                 </MenuItem>
                 <Separator Width="1" VerticalAlignment="Stretch" BorderBrush="Black" Background="Black" />
-                <MenuItem x:Name="Remove" Width="25" Height="25" Command="{Binding RemoveCommand}" CommandParameter="{Binding ElementName=grid_AdditionalParameters, Path=SelectedItem}">
+                <MenuItem x:Name="Remove" Width="25" Height="25" Command="{Binding RemoveCommand}" 
+                          CommandParameter="{Binding ElementName=grid_AdditionalParameters, Path=SelectedItem}">
                     <MenuItem.Icon>
-                        <Image Source="/red cross.jpg"></Image>
+                        <Image Source="/Icons/red cross.jpg"></Image>
                     </MenuItem.Icon>
                 </MenuItem>
             </Menu>
@@ -54,14 +57,14 @@
                   CanUserAddRows="False">
             <DataGrid.Resources>
                 <DataTemplate DataType="{x:Type models:AdditionalParameterType}">
-                    <TextBlock Text="{Binding Converter={x:Static vm:ApplicationViewModel.}}"></TextBlock>
+                    <TextBlock Text="{Binding Converter={x:Static vm:ApplicationViewModel.TypeToStringConverter}}"></TextBlock>
                 </DataTemplate>
             </DataGrid.Resources>
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Название" Width="*" Binding="{Binding Path=Title}"/>
                 <DataGridComboBoxColumn Header="Тип" Width="*" x:Name="comboBox_Type"
-                    ItemsSource="{x:Static vm:ApplicationViewModel.AdditionalParameterTypes}"                    
-                    SelectedValueBinding="{Binding Type, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"/>
+                    ItemsSource="{x:Static models:AdditionalParameterType}"                    
+                    SelectedValueBinding="{Binding ParameterType, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"/>
                 <DataGridTemplateColumn Width="*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate DataType="{x:Type vm:AdditionalParameterViewModel}">

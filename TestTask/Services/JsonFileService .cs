@@ -7,12 +7,13 @@ using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Threading.Tasks;
 using TestTask.Models;
+using TestTask.ViewModels;
 
 namespace TestTask
 {
     public class JsonFileService : IFileService
     {
-        public IList<AdditionalParameter> Open(string filename)
+        public ObservableCollection<AdditionalParameter> Open(string filename)
         {
             ObservableCollection<AdditionalParameter> additionalParameters = new ObservableCollection<AdditionalParameter>();
             DataContractJsonSerializer jsonFormatter =
@@ -28,7 +29,7 @@ namespace TestTask
         public void Save(string filename, IList<AdditionalParameter> phonesList)
         {
             DataContractJsonSerializer jsonFormatter =
-                new DataContractJsonSerializer(typeof(ObservableCollection<AdditionalParameter>));
+                new DataContractJsonSerializer(typeof(IList<AdditionalParameter>));
             using (FileStream fs = new FileStream(filename, FileMode.Create))
             {
                 jsonFormatter.WriteObject(fs, phonesList);
