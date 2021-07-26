@@ -14,18 +14,17 @@ namespace TestTask.ViewModels
     {
         private readonly AdditionalParameter parameter;
         private readonly INavigationService navigation;
-        private readonly IFileService fileService;
         private readonly IDialogService dialogService;
-        //private int indexOfChosenParameter;
 
-
-        public AdditionalParameterViewModel(AdditionalParameter parameter, INavigationService navigation, IFileService fileService, IDialogService dialogService)
+        public AdditionalParameterViewModel(AdditionalParameter parameter, INavigationService navigation, IDialogService dialogService)
         {
             this.parameter = parameter;
             this.navigation = navigation;
-            this.fileService = fileService;
             this.dialogService = dialogService;
             stringList = parameter.ParametersList != null
+                ? new ObservableCollection<string>(parameter.ParametersList)
+                : new ObservableCollection<string>();
+            stringListBefore = parameter.ParametersList != null
                 ? new ObservableCollection<string>(parameter.ParametersList)
                 : new ObservableCollection<string>();
         }
@@ -60,18 +59,10 @@ namespace TestTask.ViewModels
 
         private ObservableCollection<string> stringList;
 
-        public ObservableCollection<string> StringList
-        {
-            get => stringList;
-            set
-            {
-                if (parameter.ParametersList != value.ToList())
-                {
-                    parameter.ParametersList = new List<string>(value);
-                    RaisePropertyChanged();
-                }
-            }
-        }
+        public ObservableCollection<string> StringList => stringList;
+        private ObservableCollection<string> stringListBefore;
+
+        public ObservableCollection<string> StringListBefore => stringListBefore;
 
         private ICommand showListWindowCommand;
         public ICommand ShowListWindowCommand 
@@ -101,7 +92,7 @@ namespace TestTask.ViewModels
                     }
 
                 },
-                    (obj) => ((string)obj != stringList?.First() || stringList.Count > 0) && parameter.Type == AdditionalParameterType.ListValueSet);
+                    (obj) => (string)obj != stringList?.First() && stringList.Count > 0);
             }
         }
 
@@ -119,26 +110,19 @@ namespace TestTask.ViewModels
                         stringList.Move(currentIndex, currentIndex + 1);
                     }
                 },
-                    (obj) => ((string)obj != stringList?.Last() || stringList.Count > 0) && parameter.Type == AdditionalParameterType.ListValueSet);
+                    (obj) => (string)obj != stringList?.Last() && stringList.Count > 0);
             }
         }
 
         // команда сохранения изменений
-        private ICommand saveInWindowCommand;
-        public ICommand SaveInWindowCommand
+        private ICommand okndCloseInWindowCommand;
+        public ICommand OkndCloseInWindowCommand
         {
             get
             {
-                return saveInWindowCommand ??= new RelayCommand(obj =>
+                return okndCloseInWindowCommand ??= new RelayCommand(obj =>
                 {
-                    try
-                    {
-                        Model.ParametersList = new List<string>(stringList);
-                    }
-                    catch (Exception ex)
-                    {
-                        dialogService.ShowMessage(ex.Message);
-                    }
+
                 });
             }
         }
@@ -152,8 +136,9 @@ namespace TestTask.ViewModels
                 {
                     try
                     {
-                        //stringList.Clear();
-                        stringList = new ObservableCollection<string>(parameter.ParametersList);
+                        stringList.Clear();
+                        foreach (var s in stringListBefore)
+                            stringList.Add(s);
                     }
                     catch (Exception ex)
                     {

@@ -35,15 +35,5 @@ namespace TestTask
                 jsonFormatter.WriteObject(fs, parametersList);
             }
         }
-
-        //public void SaveList(string filename, IList<string> list)
-        //{
-        //    DataContractJsonSerializer jsonFormatter =
-        //        new DataContractJsonSerializer(typeof(IList<string>));
-        //    using (FileStream fs = new FileStream(filename, FileMode.Create))
-        //    {
-        //        jsonFormatter.WriteObject(fs, list);
-        //    }
-        //}
     }
 }

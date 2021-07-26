@@ -20,7 +20,7 @@ namespace TestTask.ViewModels
         private readonly IFileService fileService;
         private readonly IDialogService dialogService;
         //private int indexOfChosenParameter;
-        public ObservableCollection<AdditionalParameterViewModel> AdditionalParameters { get; set; }
+        public static ObservableCollection<AdditionalParameterViewModel> AdditionalParameters { get; set; }
         public static AdditionalParameterType[] AdditionalParameterTypes => Enum.GetValues<AdditionalParameterType>();
 
         public static EnumToStringConverter<AdditionalParameterType> TypeToStringConverter { get; } =
@@ -40,7 +40,7 @@ namespace TestTask.ViewModels
                 return addCommand ??= new RelayCommand(obj =>
                   {
                       AdditionalParameters.Insert(0, new AdditionalParameterViewModel(
-                          new AdditionalParameter(), navigation, fileService, dialogService));
+                          new AdditionalParameter(), navigation, dialogService));
                   });
             }
         }
@@ -93,7 +93,7 @@ namespace TestTask.ViewModels
                           AdditionalParameters.Clear();
                           foreach (var parameter in additionalParameters)
                               AdditionalParameters.Add(new AdditionalParameterViewModel(
-                                  parameter, navigation, fileService, dialogService));
+                                  parameter, navigation, dialogService));
                           dialogService.ShowMessage("Изменения отменены");
                       }
                       catch (Exception ex)
@@ -115,11 +115,11 @@ namespace TestTask.ViewModels
                     if (obj is AdditionalParameterViewModel parameter)
                     {
                         int currentIndex = AdditionalParameters.IndexOf(parameter);
-                        AdditionalParameters.Move(currentIndex, currentIndex - 1);
+                            AdditionalParameters.Move(currentIndex, currentIndex - 1);
                     }
 
                 },
-                    (obj) => obj != AdditionalParameters?.First() || AdditionalParameters.Count > 0);
+                    (obj) => obj != AdditionalParameters?.First() && AdditionalParameters.Count > 0);
             }
         }
 
@@ -134,10 +134,10 @@ namespace TestTask.ViewModels
                     if (obj is AdditionalParameterViewModel parameter)
                     {
                         int currentIndex = AdditionalParameters.IndexOf(parameter);
-                        AdditionalParameters.Move(currentIndex, currentIndex + 1);
+                            AdditionalParameters.Move(currentIndex, currentIndex + 1);
                     }
                 },
-                    (obj) => obj != AdditionalParameters?.Last() || AdditionalParameters.Count > 0);
+                    (obj) => obj != AdditionalParameters?.Last() && AdditionalParameters.Count > 0);
             }
         }
 
@@ -147,27 +147,8 @@ namespace TestTask.ViewModels
             this.dialogService = dialogService;
             this.navigation = navigation;
             dialogService.FilePath = @"C:\Users\Matvey\source\repos\TestTask\TestTaskParametersData.json";
-            //AdditionalParameters = new ObservableCollection<AdditionalParameterViewModel>
-            //{
-            //    new AdditionalParameterViewModel(new AdditionalParameter{
-            //        Title = "par1",
-            //        Type = AdditionalParameterType.String,
-            //        ParametersList = new List<string>()}, navigation, fileService, dialogService),
-            //    new AdditionalParameterViewModel(new AdditionalParameter{
-            //        Title = "par2",
-            //        Type = AdditionalParameterType.StringWithHystory,
-            //        ParametersList = new List<string>()}, navigation, fileService, dialogService),
-            //    new AdditionalParameterViewModel(new AdditionalParameter{
-            //        Title = "par3",
-            //        Type = AdditionalParameterType.ListValue,
-            //        ParametersList = new List<string>{"Value 1"}}, navigation, fileService, dialogService),
-            //    new AdditionalParameterViewModel(new AdditionalParameter{
-            //        Title = "par4",
-            //        Type = AdditionalParameterType.ListValueSet,
-            //        ParametersList = new List<string>{"Value 1", "Value 2", "Value 3"}}, navigation, fileService, dialogService)
-            //};
             AdditionalParameters = new ObservableCollection<AdditionalParameterViewModel>(
-                fileService.Open(dialogService.FilePath).Select(m => new AdditionalParameterViewModel(m, navigation, fileService, dialogService)));
+                fileService.Open(dialogService.FilePath).Select(m => new AdditionalParameterViewModel(m, navigation, dialogService)));
         }
     }
 }
