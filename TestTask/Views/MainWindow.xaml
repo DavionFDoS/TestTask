@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TestTask"
         xmlns:models ="clr-namespace:TestTask.Models"
-        xmlns:vm ="clr-namespace:TestTask.ViewModels" d:DataContext="{d:DesignInstance Type=vm:ApplicationViewModel}"
+        xmlns:vm ="clr-namespace:TestTask.ViewModels" 
+        d:DataContext="{d:DesignInstance Type=vm:ApplicationViewModel}"
         mc:Ignorable="d"
         Title="Дополнительные параметры" Height="650" Width="700">
     <Grid>

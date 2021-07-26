@@ -7,21 +7,21 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="cross-mark.jpg" />
-    <None Remove="down.png" />
-    <None Remove="heart.ico" />
-    <None Remove="plus.png" />
-    <None Remove="red cross.jpg" />
-    <None Remove="up.png" />
+    <None Remove="Icons\cross-mark.jpg" />
+    <None Remove="Icons\down.png" />
+    <None Remove="Icons\heart.ico" />
+    <None Remove="Icons\plus.png" />
+    <None Remove="Icons\red cross.jpg" />
+    <None Remove="Icons\up.png" />
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="cross-mark.jpg" />
-    <Resource Include="down.png" />
-    <Resource Include="heart.ico" />
-    <Resource Include="plus.png" />
-    <Resource Include="red cross.jpg" />
-    <Resource Include="up.png" />
+    <Resource Include="Icons\cross-mark.jpg" />
+    <Resource Include="Icons\down.png" />
+    <Resource Include="Icons\heart.ico" />
+    <Resource Include="Icons\plus.png" />
+    <Resource Include="Icons\red cross.jpg" />
+    <Resource Include="Icons\up.png" />
   </ItemGroup>
 
 </Project>

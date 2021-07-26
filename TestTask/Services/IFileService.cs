@@ -13,5 +13,7 @@ namespace TestTask
     {
         ObservableCollection<AdditionalParameter> Open(string filename);
         void Save(string filename, IList<AdditionalParameter> additionalParameters);
+
+        //void SaveList(string filename, IList<string> list);
     }
 }

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TestTask" 
         xmlns:models="clr-namespace:TestTask.Models"
-        xmlns:vm="clr-namespace:TestTask.ViewModels" 
+        xmlns:vm="clr-namespace:TestTask.ViewModels" d:DataContext="{d:DesignInstance Type=vm:AdditionalParameterViewModel}"
         mc:Ignorable="d" WindowStartupLocation="CenterOwner"
         Title="Список" Height="300" Width="300" Icon="/Icons/heart.ico" x:Name="listWindow">
     <Grid>
@@ -28,19 +28,21 @@
                 <ColumnDefinition Width ="0.3*"/>
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Column="0" VerticalAlignment="Top">
-                <DataGrid ItemsSource="{Binding Path=StringList}">
+                <DataGrid x:Name="grid_Values" ItemsSource="{Binding Path=StringList}" AutoGenerateColumns="False">
                 </DataGrid>
             </StackPanel>
             <StackPanel Grid.Column="1">
-                <Button Height="20" HorizontalAlignment="Stretch" Content="Вверх" Command="{Binding MoveUpInWindowCommand}" Margin="5"></Button>
-                <Button Height="20" HorizontalAlignment="Stretch" Content="Вниз" Command="{Binding MoveDownInWindowCommand}" Margin="5"></Button>
-                <Button Height="20" HorizontalAlignment="Stretch" Content="Удалить" Command="{Binding RemoveInWindowCommand}" Margin="5"></Button>
+                <Button Height="20" HorizontalAlignment="Stretch" Content="Вверх" Command="{Binding MoveUpInWindowCommand}" 
+                        CommandParameter="{Binding ElementName=grid_Values, Path=SelectedItem}" Margin="5"></Button>
+                <Button Height="20" HorizontalAlignment="Stretch" Content="Вниз" Command="{Binding MoveDownInWindowCommand}" 
+                        CommandParameter="{Binding ElementName=grid_Values, Path=SelectedItem}" Margin="5"></Button>
+                <Button Height="20" HorizontalAlignment="Stretch" Content="Удалить" Command="{Binding RemoveInWindowCommand}" 
+                        CommandParameter="{Binding ElementName=grid_Values, Path=SelectedItem}" Margin="5"></Button>
                 <Button Height="20" HorizontalAlignment="Stretch" Content="Добавить" Command="{Binding AddInWindowCommand}" Margin="5"></Button>
-                <Button Height="20" HorizontalAlignment="Stretch" Content="Изменить" Margin="5"></Button>
             </StackPanel>
             <StackPanel Grid.Column="1" VerticalAlignment="Bottom">
-                <Button Height="20" HorizontalAlignment="Stretch" Content="Ок" Margin="5"></Button>
-                <Button Height="20" HorizontalAlignment="Stretch" Content="Отмена" Margin="5"></Button>
+                <Button Height="20" HorizontalAlignment="Stretch" Content="Ок" Command="{Binding SaveInWindowCommand}" Margin="5"></Button>
+                <Button Height="20" HorizontalAlignment="Stretch" Content="Отмена" Command="{Binding CancelInWindowCommand}" Margin="5"></Button>
             </StackPanel>
         </Grid>
     </Grid>
