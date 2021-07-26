@@ -64,7 +64,7 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Название" Width="*" Binding="{Binding Path=Title}"/>
                 <DataGridComboBoxColumn Header="Тип" Width="*" x:Name="comboBox_Type"
-                    ItemsSource="{x:Static models:AdditionalParameterType}"                    
+                    ItemsSource="{x:Static vm:ApplicationViewModel.AdditionalParameterTypes}"                   
                     SelectedValueBinding="{Binding ParameterType, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"/>
                 <DataGridTemplateColumn Width="*">
                     <DataGridTemplateColumn.CellTemplate>
