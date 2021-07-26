@@ -17,9 +17,7 @@ namespace TestTask.ViewModels
         private readonly IFileService fileService;
         private readonly IDialogService dialogService;
         //private int indexOfChosenParameter;
-        private ObservableCollection<string> stringList;
 
-        public ObservableCollection<string> StringList => stringList;
 
         public AdditionalParameterViewModel(AdditionalParameter parameter, INavigationService navigation, IFileService fileService, IDialogService dialogService)
         {
@@ -60,6 +58,21 @@ namespace TestTask.ViewModels
             }
         }
 
+        private ObservableCollection<string> stringList;
+
+        public ObservableCollection<string> StringList
+        {
+            get => stringList;
+            set
+            {
+                if (parameter.ParametersList != value.ToList())
+                {
+                    parameter.ParametersList = new List<string>(value);
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
         private ICommand showListWindowCommand;
         public ICommand ShowListWindowCommand 
         {
@@ -88,7 +101,7 @@ namespace TestTask.ViewModels
                     }
 
                 },
-                    (obj) => (string)obj != stringList?.First() || stringList.Count > 0);
+                    (obj) => ((string)obj != stringList?.First() || stringList.Count > 0) && parameter.Type == AdditionalParameterType.ListValueSet);
             }
         }
 
@@ -106,7 +119,7 @@ namespace TestTask.ViewModels
                         stringList.Move(currentIndex, currentIndex + 1);
                     }
                 },
-                    (obj) => (string)obj != stringList?.Last() || stringList.Count > 0);
+                    (obj) => ((string)obj != stringList?.Last() || stringList.Count > 0) && parameter.Type == AdditionalParameterType.ListValueSet);
             }
         }
 
@@ -139,7 +152,7 @@ namespace TestTask.ViewModels
                 {
                     try
                     {
-                        stringList.Clear();
+                        //stringList.Clear();
                         stringList = new ObservableCollection<string>(parameter.ParametersList);
                     }
                     catch (Exception ex)
@@ -174,7 +187,7 @@ namespace TestTask.ViewModels
                     if (obj is string parameter)
                         stringList.Remove(parameter);
                 },
-                    (obj) => stringList.Count > 0);
+                    (obj) => (stringList.Count > 0) && parameter.Type == AdditionalParameterType.ListValueSet);
             }
         }
     }

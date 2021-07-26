@@ -147,27 +147,27 @@ namespace TestTask.ViewModels
             this.dialogService = dialogService;
             this.navigation = navigation;
             dialogService.FilePath = @"C:\Users\Matvey\source\repos\TestTask\TestTaskParametersData.json";
-            AdditionalParameters = new ObservableCollection<AdditionalParameterViewModel>
-            {
-                new AdditionalParameterViewModel(new AdditionalParameter{
-                    Title = "par1",
-                    Type = AdditionalParameterType.String,
-                    ParametersList = new List<string>()}, navigation, fileService, dialogService),
-                new AdditionalParameterViewModel(new AdditionalParameter{
-                    Title = "par2",
-                    Type = AdditionalParameterType.StringWithHystory,
-                    ParametersList = new List<string>()}, navigation, fileService, dialogService),
-                new AdditionalParameterViewModel(new AdditionalParameter{
-                    Title = "par3",
-                    Type = AdditionalParameterType.ListValue,
-                    ParametersList = new List<string>{"Value 1"}}, navigation, fileService, dialogService),
-                new AdditionalParameterViewModel(new AdditionalParameter{
-                    Title = "par4",
-                    Type = AdditionalParameterType.ListValueSet,
-                    ParametersList = new List<string>{"Value 1", "Value 2", "Value 3"}}, navigation, fileService, dialogService)
-            };
-            //AdditionalParameters = new ObservableCollection<AdditionalParameterViewModel>(
-            //    fileService.Open(dialogService.FilePath).Select(m => new AdditionalParameterViewModel(m, navigation)));
+            //AdditionalParameters = new ObservableCollection<AdditionalParameterViewModel>
+            //{
+            //    new AdditionalParameterViewModel(new AdditionalParameter{
+            //        Title = "par1",
+            //        Type = AdditionalParameterType.String,
+            //        ParametersList = new List<string>()}, navigation, fileService, dialogService),
+            //    new AdditionalParameterViewModel(new AdditionalParameter{
+            //        Title = "par2",
+            //        Type = AdditionalParameterType.StringWithHystory,
+            //        ParametersList = new List<string>()}, navigation, fileService, dialogService),
+            //    new AdditionalParameterViewModel(new AdditionalParameter{
+            //        Title = "par3",
+            //        Type = AdditionalParameterType.ListValue,
+            //        ParametersList = new List<string>{"Value 1"}}, navigation, fileService, dialogService),
+            //    new AdditionalParameterViewModel(new AdditionalParameter{
+            //        Title = "par4",
+            //        Type = AdditionalParameterType.ListValueSet,
+            //        ParametersList = new List<string>{"Value 1", "Value 2", "Value 3"}}, navigation, fileService, dialogService)
+            //};
+            AdditionalParameters = new ObservableCollection<AdditionalParameterViewModel>(
+                fileService.Open(dialogService.FilePath).Select(m => new AdditionalParameterViewModel(m, navigation, fileService, dialogService)));
         }
     }
 }

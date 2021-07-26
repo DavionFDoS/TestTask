@@ -28,7 +28,7 @@
                 <ColumnDefinition Width ="0.3*"/>
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Column="0" VerticalAlignment="Top">
-                <DataGrid x:Name="grid_Values" ItemsSource="{Binding Path=StringList}" AutoGenerateColumns="False">
+                <DataGrid x:Name="grid_Values" ItemsSource="{Binding Path=StringList}" AutoGenerateColumns="False" CanUserAddRows="False">
                 </DataGrid>
             </StackPanel>
             <StackPanel Grid.Column="1">

@@ -1,1 +1,22 @@
-[{"Title":"Параметр 1","Type":0},{"Title":"Параметр 2","Type":1},{"Title":"Параметр 3","Type":2},{"Title":"Параметр 4","Type":3}]
+[
+  {
+    "ParametersList": [],
+    "Title": "par1",
+    "Type": 0
+  },
+  {
+    "ParametersList": [],
+    "Title": "par2",
+    "Type": 1
+  },
+  {
+    "ParametersList": [ "Value 1", "Value 2", "Value 3" ],
+    "Title": "par3",
+    "Type": 2
+  },
+  {
+    "ParametersList": [ "Value 1", "Value 2", "Value 3" ],
+    "Title": "par4",
+    "Type": 3
+  }
+]
