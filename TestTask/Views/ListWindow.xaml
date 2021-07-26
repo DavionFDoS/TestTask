@@ -37,7 +37,7 @@
                           VerticalScrollBarVisibility="Auto" 
                           SelectionMode="Extended">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Width="*"/>
+                        <DataGridTextColumn Width="*" Binding="{Binding Path=Name}"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </StackPanel>
@@ -51,8 +51,8 @@
                 <Button Height="20" HorizontalAlignment="Stretch" Content="Добавить" Command="{Binding AddInWindowCommand}" Margin="5"></Button>
             </StackPanel>
             <StackPanel Grid.Column="1" VerticalAlignment="Bottom">
-                <Button Height="20" HorizontalAlignment="Stretch" Content="Ок"
-                        Command="{Binding OkndCloseInWindowCommand}" Margin="5"></Button>
+                <Button Height="20" HorizontalAlignment="Stretch" Content="Ок" IsDefault="True"
+                        Command="{Binding OkndCloseInWindowCommand}" CommandParameter="{Binding ElementName=listWindow}" Margin="5"></Button>
                 <Button Height="20" HorizontalAlignment="Stretch" Content="Отмена" 
                         Command="{Binding CancelInWindowCommand}" Margin="5"></Button>
             </StackPanel>

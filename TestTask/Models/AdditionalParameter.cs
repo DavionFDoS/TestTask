@@ -16,6 +16,6 @@ namespace TestTask.Models
         public string Title { get; set; }
         public AdditionalParameterType Type { get; set; }
 
-        public List<string> ParametersList { get; set; }
+        public List<Params> ParametersList { get; set; }
     }
 }

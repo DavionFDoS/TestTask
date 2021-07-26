@@ -18,12 +18,6 @@ namespace TestTask.Services
                 view.Owner = Application.Current.MainWindow;
                 view.Show();
             }
-
-            if (viewModel is ApplicationViewModel)
-            {
-                var view = new ListWindow() { DataContext = viewModel };
-                view.Close();
-            }
         }
     }
 }

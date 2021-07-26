@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using TestTask.Models;
 using TestTask.Services;
@@ -22,11 +23,11 @@ namespace TestTask.ViewModels
             this.navigation = navigation;
             this.dialogService = dialogService;
             stringList = parameter.ParametersList != null
-                ? new ObservableCollection<string>(parameter.ParametersList)
-                : new ObservableCollection<string>();
+                ? new ObservableCollection<Params>(parameter.ParametersList)
+                : new ObservableCollection<Params>();
             stringListBefore = parameter.ParametersList != null
-                ? new ObservableCollection<string>(parameter.ParametersList)
-                : new ObservableCollection<string>();
+                ? new ObservableCollection<Params>(parameter.ParametersList)
+                : new ObservableCollection<Params>();
         }
 
         public AdditionalParameter Model => parameter;
@@ -57,12 +58,12 @@ namespace TestTask.ViewModels
             }
         }
 
-        private ObservableCollection<string> stringList;
+        private ObservableCollection<Params> stringList;
 
-        public ObservableCollection<string> StringList => stringList;
-        private ObservableCollection<string> stringListBefore;
+        public ObservableCollection<Params> StringList => stringList;
+        private ObservableCollection<Params> stringListBefore;
 
-        public ObservableCollection<string> StringListBefore => stringListBefore;
+        public ObservableCollection<Params> StringListBefore => stringListBefore;
 
         private ICommand showListWindowCommand;
         public ICommand ShowListWindowCommand 
@@ -85,14 +86,14 @@ namespace TestTask.ViewModels
             {
                 return moveUpInWindowCommand ??= new RelayCommand(obj =>
                 {
-                    if (obj is string parameter)
+                    if (obj is Params parameter)
                     {
                         int currentIndex = stringList.IndexOf(parameter);
                         stringList.Move(currentIndex, currentIndex - 1);
                     }
 
                 },
-                    (obj) => (string)obj != stringList?.First() && stringList.Count > 0);
+                    (obj) => (Params)obj != stringList?.First() && stringList.Count > 0);
             }
         }
 
@@ -104,13 +105,13 @@ namespace TestTask.ViewModels
             {
                 return moveDownInWindowCommand ??= new RelayCommand(obj =>
                 {
-                    if (obj is string parameter)
+                    if (obj is Params parameter)
                     {
                         int currentIndex = stringList.IndexOf(parameter);
                         stringList.Move(currentIndex, currentIndex + 1);
                     }
                 },
-                    (obj) => (string)obj != stringList?.Last() && stringList.Count > 0);
+                    (obj) => (Params)obj != stringList?.Last() && stringList.Count > 0);
             }
         }
 
@@ -122,6 +123,10 @@ namespace TestTask.ViewModels
             {
                 return okndCloseInWindowCommand ??= new RelayCommand(obj =>
                 {
+                    if(obj is ListWindow window)
+                    {
+                        window.Close();
+                    }
 
                 });
             }
@@ -156,7 +161,7 @@ namespace TestTask.ViewModels
             {
                 return addInWindowCommand ??= new RelayCommand(obj =>
                 {
-                    stringList.Insert(0, new string("Значение " + stringList.Count));
+                    stringList.Insert(0, new Params { Name = "Значение " + stringList.Count});
                 },
                 (obj) => parameter.Type == AdditionalParameterType.ListValueSet);
             }
@@ -169,7 +174,7 @@ namespace TestTask.ViewModels
             {
                 return removeInWindowCommand ??= new RelayCommand(obj =>
                 {
-                    if (obj is string parameter)
+                    if (obj is Params parameter)
                         stringList.Remove(parameter);
                 },
                     (obj) => (stringList.Count > 0) && parameter.Type == AdditionalParameterType.ListValueSet);

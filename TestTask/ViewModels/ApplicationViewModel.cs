@@ -40,7 +40,14 @@ namespace TestTask.ViewModels
                 return addCommand ??= new RelayCommand(obj =>
                   {
                       AdditionalParameters.Insert(0, new AdditionalParameterViewModel(
-                          new AdditionalParameter(), navigation, dialogService));
+                          new AdditionalParameter { ParametersList = new List<Params> { 
+                              new Params { Name = "Value 1" }, 
+                              new Params { Name = "Value 2" }, 
+                              new Params { Name = "Value 3" } }, 
+                              Title = "Added Parameter", 
+                              Type = AdditionalParameterType.String}, 
+                          navigation, 
+                          dialogService));
                   });
             }
         }
@@ -147,8 +154,15 @@ namespace TestTask.ViewModels
             this.dialogService = dialogService;
             this.navigation = navigation;
             dialogService.FilePath = @"C:\Users\Matvey\source\repos\TestTask\TestTaskParametersData.json";
+            //AdditionalParameters = new ObservableCollection<AdditionalParameterViewModel>
+            //{
+            //    new AdditionalParameterViewModel(new AdditionalParameter{ParametersList = new List<Params>{ new Params{Name = "Value 1"}, new Params{Name = "Value 2"}, new Params{Name = "Value 3"} }, Title = "Par1", Type = AdditionalParameterType.String }, navigation, dialogService),
+            //    new AdditionalParameterViewModel(new AdditionalParameter{ParametersList = new List<Params>{ new Params{Name = "Value 1"}, new Params{Name = "Value 2"}, new Params{Name = "Value 3"} }, Title = "Par2", Type = AdditionalParameterType.StringWithHystory}, navigation, dialogService),
+            //    new AdditionalParameterViewModel(new AdditionalParameter{ParametersList = new List<Params>{ new Params{Name = "Value 1"}}, Title = "Par3", Type = AdditionalParameterType.ListValue }, navigation, dialogService),
+            //    new AdditionalParameterViewModel(new AdditionalParameter{ParametersList = new List<Params>{ new Params{Name = "Value 1"}, new Params{Name = "Value 2"}, new Params{Name = "Value 3"} }, Title = "Par4", Type = AdditionalParameterType.ListValueSet }, navigation, dialogService)
+            //};
             AdditionalParameters = new ObservableCollection<AdditionalParameterViewModel>(
-                fileService.Open(dialogService.FilePath).Select(m => new AdditionalParameterViewModel(m, navigation, dialogService)));
+             fileService.Open(dialogService.FilePath).Select(m => new AdditionalParameterViewModel(m, navigation, dialogService)));
         }
     }
 }
