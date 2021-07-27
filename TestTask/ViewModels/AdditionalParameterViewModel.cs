@@ -177,7 +177,7 @@ namespace TestTask.ViewModels
                     if (obj is Params parameter)
                         stringList.Remove(parameter);
                 },
-                    (obj) => (stringList.Count > 0) && parameter.Type == AdditionalParameterType.ListValueSet);
+                    (obj) => stringList.Count > 1);
             }
         }
     }
