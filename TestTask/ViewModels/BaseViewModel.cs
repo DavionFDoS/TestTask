@@ -11,9 +11,9 @@ namespace TestTask.ViewModels
 {
     public class BaseViewModel : Observer
     {
-        protected static IList<Params> Clone(IList<Params> clone)
+        protected static IList<Values> Clone(IList<Values> clone)
         {
-            return new List<Params>(clone);
+            return new List<Values>(clone);
         }
     }
 }

@@ -43,7 +43,7 @@ namespace TestTask.ViewModels
                       AdditionalParameters.Insert(0, new AdditionalParameterViewModel(
                           new AdditionalParameter
                           {
-                              ParametersList = new List<Params>(),
+                              ValuesList = new List<Values>(),
                               Title = "Added Parameter",
                               Type = AdditionalParameterType.String
                           },
@@ -60,11 +60,13 @@ namespace TestTask.ViewModels
             {
                 return removeCommand ??= new RelayCommand(obj =>
                     {
-                        if (obj is AdditionalParameterViewModel parameter)
-                            AdditionalParameters.Remove(parameter); // add question
-
+                        if (MessageBox.Show("Вы действительно хотите удалить этот параметр?", "Удалить", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                        {
+                            if (obj is AdditionalParameterViewModel parameter)
+                                AdditionalParameters.Remove(parameter);
+                        }
                     },
-                    (obj) => AdditionalParameters.Count > 0);
+                    (obj) => AdditionalParameters.Count > 0 && obj != null);
             }
         }
         // команда сохранения файла
@@ -87,6 +89,16 @@ namespace TestTask.ViewModels
                   });
             }
         }
+
+        private ObservableCollection<AdditionalParameterViewModel> InitializeData()
+        {
+            var additionalParameters = fileService.Open(dialogService.FilePath);
+            IList<AdditionalParameterViewModel> vm = new List<AdditionalParameterViewModel>();
+            foreach (var parameter in additionalParameters)
+                vm.Add(new AdditionalParameterViewModel(
+                    parameter, navigation, dialogService));
+            return new ObservableCollection<AdditionalParameterViewModel>(vm);
+        }
         // команда открытия файла
         private ICommand openCommand;
         public ICommand OpenCommand
@@ -97,11 +109,14 @@ namespace TestTask.ViewModels
                   {
                       try
                       {
-                          var additionalParameters = fileService.Open(dialogService.FilePath);
+                          //AdditionalParameters.Clear();
+                          //AdditionalParameters = InitializeData();
+                          
+                          var additionalParameters = fileService.Open(dialogService.FilePath); //Rem: почему не сделано как в конструкторе и через общий метод? или вызов OpenCommand.Execute()
                           AdditionalParameters.Clear();
                           foreach (var parameter in additionalParameters)
                               AdditionalParameters.Add(new AdditionalParameterViewModel(
-                                  parameter, navigation, dialogService));
+                              parameter, navigation, dialogService));
                           dialogService.ShowMessage("Изменения отменены");
                       }
                       catch (Exception ex)
@@ -127,7 +142,7 @@ namespace TestTask.ViewModels
                     }
 
                 },
-                    (obj) => AdditionalParameters.Count > 0 && obj != AdditionalParameters?.First());
+                    (obj) => obj is AdditionalParameterViewModel && AdditionalParameters.Count > 0 && obj != AdditionalParameters?.First());
             }
         }
 
@@ -145,7 +160,7 @@ namespace TestTask.ViewModels
                         AdditionalParameters.Move(currentIndex, currentIndex + 1);
                     }
                 },
-                    (obj) => AdditionalParameters.Count > 0 && obj != AdditionalParameters?.Last());
+                    (obj) => obj is AdditionalParameterViewModel && AdditionalParameters.Count > 0 && obj != AdditionalParameters?.Last());
             }
         }
 
@@ -157,15 +172,16 @@ namespace TestTask.ViewModels
             dialogService.FilePath = @"TestTaskParametersData.json";
             //AdditionalParameters = new ObservableCollection<AdditionalParameterViewModel>
             //{
-            //    new AdditionalParameterViewModel(new AdditionalParameter{ParametersList = new List<Params>{ new Params{Name = "Value 1"}, new Params{Name = "Value 2"}, new Params{Name = "Value 3"} }, Title = "Par1", Type = AdditionalParameterType.String }, navigation, dialogService),
-            //    new AdditionalParameterViewModel(new AdditionalParameter{ParametersList = new List<Params>{ new Params{Name = "Value 1"}, new Params{Name = "Value 2"}, new Params{Name = "Value 3"} }, Title = "Par2", Type = AdditionalParameterType.StringWithHystory}, navigation, dialogService),
-            //    new AdditionalParameterViewModel(new AdditionalParameter{ParametersList = new List<Params>{ new Params{Name = "Value 1"}}, Title = "Par3", Type = AdditionalParameterType.ListValue }, navigation, dialogService),
-            //    new AdditionalParameterViewModel(new AdditionalParameter{ParametersList = new List<Params>{ new Params{Name = "Value 1"}, new Params{Name = "Value 2"}, new Params{Name = "Value 3"} }, Title = "Par4", Type = AdditionalParameterType.ListValueSet }, navigation, dialogService)
+            //    new AdditionalParameterViewModel(new AdditionalParameter{ValuesList = new List<Values>{ new Values{Name = "Value 1"}, new Values{Name = "Value 2"}, new Values{Name = "Value 3"} }, Title = "Par1", Type = AdditionalParameterType.String }, navigation, dialogService),
+            //    new AdditionalParameterViewModel(new AdditionalParameter{ValuesList = new List<Values>{ new Values{Name = "Value 1"}, new Values{Name = "Value 2"}, new Values{Name = "Value 3"} }, Title = "Par2", Type = AdditionalParameterType.StringWithHystory}, navigation, dialogService),
+            //    new AdditionalParameterViewModel(new AdditionalParameter{ValuesList = new List<Values>{ new Values{Name = "Value 1"}}, Title = "Par3", Type = AdditionalParameterType.ListValue }, navigation, dialogService),
+            //    new AdditionalParameterViewModel(new AdditionalParameter{ValuesList = new List<Values>{ new Values{Name = "Value 1"}, new Values{Name = "Value 2"}, new Values{Name = "Value 3"} }, Title = "Par4", Type = AdditionalParameterType.ListValueset }, navigation, dialogService)
             //};
             if (File.Exists(dialogService.FilePath))
             {
                 AdditionalParameters = new ObservableCollection<AdditionalParameterViewModel>(
                     fileService.Open(dialogService.FilePath).Select(m => new AdditionalParameterViewModel(m, navigation, dialogService)));
+                //AdditionalParameters = InitializeData();
             }
             else
             {

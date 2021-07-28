@@ -26,13 +26,13 @@ namespace TestTask.Services
             return additionalParameters;
         }
 
-        public void Save(string filename, IList<AdditionalParameter> parametersList)
+        public void Save(string filename, IList<AdditionalParameter> ValuesList)
         {
             DataContractJsonSerializer jsonFormatter =
                 new DataContractJsonSerializer(typeof(IList<AdditionalParameter>));
             using (FileStream fs = new FileStream(filename, FileMode.Create))
             {
-                jsonFormatter.WriteObject(fs, parametersList);
+                jsonFormatter.WriteObject(fs, ValuesList);
             }
         }
     }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace TestTask.Models
 {
-    public class Params : Observer
+    public class Values : Observer
     {
         private string name;
         public string Name

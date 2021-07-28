@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace TestTask.Models
 {
-    public class Observer : INotifyPropertyChanged
+    public class Observer : INotifyPropertyChanged // Класс реализующий INotifyPropertyChanged интерфейс
     {
         public event PropertyChangedEventHandler PropertyChanged;
 

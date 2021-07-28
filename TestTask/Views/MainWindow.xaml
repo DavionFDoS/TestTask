@@ -55,7 +55,8 @@
                   VerticalAlignment="Top" 
                   VerticalScrollBarVisibility="Auto" 
                   SelectionMode="Extended"
-                  CanUserAddRows="False">
+                  CanUserAddRows="False"
+                  CanUserSortColumns="False">
             <DataGrid.Resources>
                 <DataTemplate DataType="{x:Type models:AdditionalParameterType}">
                     <TextBlock Text="{Binding Converter={x:Static vm:ApplicationViewModel.TypeToStringConverter}}"></TextBlock>

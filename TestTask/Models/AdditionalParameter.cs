@@ -11,11 +11,11 @@ using System.Windows.Controls;
 
 namespace TestTask.Models
 {
-    public class AdditionalParameter
+    public class AdditionalParameter // Модель добавленного параметра для DataGrid
     {
-        public string Title { get; set; }
-        public AdditionalParameterType Type { get; set; }
+        public string Title { get; set; } // Название
+        public AdditionalParameterType Type { get; set; } // Перечисления для ComboBox
 
-        public List<Params> ParametersList { get; set; }
+        public List<Values> ValuesList { get; set; } // Список параметров в дополнительном окне
     }
 }

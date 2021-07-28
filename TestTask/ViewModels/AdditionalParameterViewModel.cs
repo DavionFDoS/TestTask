@@ -22,9 +22,9 @@ namespace TestTask.ViewModels
             this.parameter = parameter;
             this.navigation = navigation;
             this.dialogService = dialogService;
-            stringList = parameter.ParametersList != null
-                ? new ObservableCollection<Params>(parameter.ParametersList)
-                : new ObservableCollection<Params>();
+            stringList = parameter.ValuesList != null
+                ? new ObservableCollection<Values>(parameter.ValuesList)
+                : new ObservableCollection<Values>();
             stringListBefore = Clone(stringList);
         }
 
@@ -55,12 +55,15 @@ namespace TestTask.ViewModels
                 }
             }
         }
+        // лист значений
+        private ObservableCollection<Values> stringList;
 
-        private ObservableCollection<Params> stringList;
+        public ObservableCollection<Values> StringList => stringList;
 
-        public ObservableCollection<Params> StringList => stringList;
-        private readonly IList<Params> stringListBefore;
+        // Копия листа значений для отката изменений
+        private readonly IList<Values> stringListBefore;
 
+        // команда открытия окна редактирования списка
         private ICommand showEditListWindowCommand;
         public ICommand ShowEditListWindowCommand
         {
@@ -82,14 +85,14 @@ namespace TestTask.ViewModels
             {
                 return moveUpInWindowCommand ??= new RelayCommand(obj =>
                 {
-                    if (obj is Params parameter)
+                    if (obj is Values parameter)
                     {
                         int currentIndex = stringList.IndexOf(parameter);
                         stringList.Move(currentIndex, currentIndex - 1);
                     }
 
                 },
-                    (obj) => stringList.Count > 0 && (Params)obj != stringList?.First());
+                    (obj) => stringList.Count > 0 && (Values)obj != stringList?.First());
             }
         }
 
@@ -101,13 +104,13 @@ namespace TestTask.ViewModels
             {
                 return moveDownInWindowCommand ??= new RelayCommand(obj =>
                 {
-                    if (obj is Params parameter)
+                    if (obj is Values parameter)
                     {
                         int currentIndex = stringList.IndexOf(parameter);
                         stringList.Move(currentIndex, currentIndex + 1);
                     }
                 },
-                    (obj) => stringList.Count > 0 && (Params)obj != stringList?.Last());
+                    (obj) => stringList.Count > 0 && (Values)obj != stringList?.Last());
             }
         }
 
@@ -134,16 +137,9 @@ namespace TestTask.ViewModels
             {
                 return cancelInWindowCommand ??= new RelayCommand(obj =>
                 {
-                    try
-                    {
                         stringList.Clear();
                         foreach (var s in stringListBefore)
-                            stringList.Add(s);
-                    }
-                    catch (Exception ex)
-                    {
-                        dialogService.ShowMessage(ex.Message);
-                    }
+                            stringList.Add(s);          
                 });
             }
         }
@@ -156,9 +152,9 @@ namespace TestTask.ViewModels
             {
                 return addInWindowCommand ??= new RelayCommand(obj =>
                 {
-                    stringList.Insert(stringList.Count, new Params { Name = "Value " + stringList.Count });
+                    stringList.Insert(stringList.Count, new Values { Name = "Value " + stringList.Count });
                 },
-                (obj) => parameter.Type == AdditionalParameterType.ListValueSet);
+                (obj) => parameter.Type == AdditionalParameterType.ListValueSet || parameter.Type == AdditionalParameterType.ListValue);
             }
         }
         // команда удаления выбранного элемента
@@ -169,10 +165,14 @@ namespace TestTask.ViewModels
             {
                 return removeInWindowCommand ??= new RelayCommand(obj =>
                 {
-                    if (obj is Params parameter)
-                        stringList.Remove(parameter);
+                    if (MessageBox.Show("Вы действительно хотите удалить это значение?", "Удалить", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                    {
+                        if (obj is Values parameter)
+                            stringList.Remove(parameter);
+                    }
+                    
                 },
-                    (obj) => stringList.Count > 1);
+                    (obj) => stringList.Count > 0 && obj != null);
             }
         }
     }
