@@ -11,6 +11,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using TestTask.Services;
+using System.IO;
 
 namespace TestTask.ViewModels
 {
@@ -20,7 +21,7 @@ namespace TestTask.ViewModels
         private readonly IFileService fileService;
         private readonly IDialogService dialogService;
         //private int indexOfChosenParameter;
-        public static ObservableCollection<AdditionalParameterViewModel> AdditionalParameters { get; set; }
+        public ObservableCollection<AdditionalParameterViewModel> AdditionalParameters { get; set; }
         public static AdditionalParameterType[] AdditionalParameterTypes => Enum.GetValues<AdditionalParameterType>();
 
         public static EnumToStringConverter<AdditionalParameterType> TypeToStringConverter { get; } =
@@ -40,13 +41,13 @@ namespace TestTask.ViewModels
                 return addCommand ??= new RelayCommand(obj =>
                   {
                       AdditionalParameters.Insert(0, new AdditionalParameterViewModel(
-                          new AdditionalParameter { ParametersList = new List<Params> { 
-                              new Params { Name = "Value 1" }, 
-                              new Params { Name = "Value 2" }, 
-                              new Params { Name = "Value 3" } }, 
-                              Title = "Added Parameter", 
-                              Type = AdditionalParameterType.String}, 
-                          navigation, 
+                          new AdditionalParameter
+                          {
+                              ParametersList = new List<Params>(),
+                              Title = "Added Parameter",
+                              Type = AdditionalParameterType.String
+                          },
+                          navigation,
                           dialogService));
                   });
             }
@@ -60,7 +61,7 @@ namespace TestTask.ViewModels
                 return removeCommand ??= new RelayCommand(obj =>
                     {
                         if (obj is AdditionalParameterViewModel parameter)
-                            AdditionalParameters.Remove(parameter);
+                            AdditionalParameters.Remove(parameter); // add question
 
                     },
                     (obj) => AdditionalParameters.Count > 0);
@@ -122,11 +123,11 @@ namespace TestTask.ViewModels
                     if (obj is AdditionalParameterViewModel parameter)
                     {
                         int currentIndex = AdditionalParameters.IndexOf(parameter);
-                            AdditionalParameters.Move(currentIndex, currentIndex - 1);
+                        AdditionalParameters.Move(currentIndex, currentIndex - 1);
                     }
 
                 },
-                    (obj) => obj != AdditionalParameters?.First() && AdditionalParameters.Count > 0);
+                    (obj) => AdditionalParameters.Count > 0 && obj != AdditionalParameters?.First());
             }
         }
 
@@ -141,10 +142,10 @@ namespace TestTask.ViewModels
                     if (obj is AdditionalParameterViewModel parameter)
                     {
                         int currentIndex = AdditionalParameters.IndexOf(parameter);
-                            AdditionalParameters.Move(currentIndex, currentIndex + 1);
+                        AdditionalParameters.Move(currentIndex, currentIndex + 1);
                     }
                 },
-                    (obj) => obj != AdditionalParameters?.Last() && AdditionalParameters.Count > 0);
+                    (obj) => AdditionalParameters.Count > 0 && obj != AdditionalParameters?.Last());
             }
         }
 
@@ -153,7 +154,7 @@ namespace TestTask.ViewModels
             this.fileService = fileService;
             this.dialogService = dialogService;
             this.navigation = navigation;
-            dialogService.FilePath = @"C:\Users\Matvey\source\repos\TestTask\TestTaskParametersData.json";
+            dialogService.FilePath = @"TestTaskParametersData.json";
             //AdditionalParameters = new ObservableCollection<AdditionalParameterViewModel>
             //{
             //    new AdditionalParameterViewModel(new AdditionalParameter{ParametersList = new List<Params>{ new Params{Name = "Value 1"}, new Params{Name = "Value 2"}, new Params{Name = "Value 3"} }, Title = "Par1", Type = AdditionalParameterType.String }, navigation, dialogService),
@@ -161,8 +162,15 @@ namespace TestTask.ViewModels
             //    new AdditionalParameterViewModel(new AdditionalParameter{ParametersList = new List<Params>{ new Params{Name = "Value 1"}}, Title = "Par3", Type = AdditionalParameterType.ListValue }, navigation, dialogService),
             //    new AdditionalParameterViewModel(new AdditionalParameter{ParametersList = new List<Params>{ new Params{Name = "Value 1"}, new Params{Name = "Value 2"}, new Params{Name = "Value 3"} }, Title = "Par4", Type = AdditionalParameterType.ListValueSet }, navigation, dialogService)
             //};
-            AdditionalParameters = new ObservableCollection<AdditionalParameterViewModel>(
-             fileService.Open(dialogService.FilePath).Select(m => new AdditionalParameterViewModel(m, navigation, dialogService)));
+            if (File.Exists(dialogService.FilePath))
+            {
+                AdditionalParameters = new ObservableCollection<AdditionalParameterViewModel>(
+                    fileService.Open(dialogService.FilePath).Select(m => new AdditionalParameterViewModel(m, navigation, dialogService)));
+            }
+            else
+            {
+                dialogService.ShowMessage("File doesn't exist");
+            }
         }
     }
 }

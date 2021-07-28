@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace TestTask
 {
     /// <summary>
-    /// Логика взаимодействия для ListWindow.xaml
+    /// Логика взаимодействия для EditListWindow.xaml
     /// </summary>
-    public partial class ListWindow : Window
+    public partial class EditListWindow : Window
     {
-        public ListWindow()
+        public EditListWindow()
         {
             InitializeComponent();
         }

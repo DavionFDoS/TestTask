@@ -6,9 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace TestTask
+namespace TestTask.Services
 {
-    public class DefaultDialogService : IDialogService
+    public class DialogService : IDialogService
     {
         public string FilePath { get; set; }
         public void ShowMessage(string message)

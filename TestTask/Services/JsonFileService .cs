@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using TestTask.Models;
 using TestTask.ViewModels;
 
-namespace TestTask
+namespace TestTask.Services
 {
     public class JsonFileService : IFileService
     {

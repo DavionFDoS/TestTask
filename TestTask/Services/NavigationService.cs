@@ -8,15 +8,15 @@ using TestTask.ViewModels;
 
 namespace TestTask.Services
 {
-    public class DefaultNavigationService : INavigationService
+    public class NavigationService : INavigationService
     {
         public void NavigateTo(BaseViewModel viewModel)
         {
             if (viewModel is AdditionalParameterViewModel)
             {
-                var view = new ListWindow() { DataContext = viewModel };
+                var view = new EditListWindow() { DataContext = viewModel };
                 view.Owner = Application.Current.MainWindow;
-                view.Show();
+                view.ShowDialog();
             }
         }
     }

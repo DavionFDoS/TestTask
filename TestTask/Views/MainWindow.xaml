@@ -69,7 +69,7 @@
                 <DataGridTemplateColumn Width="*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate DataType="{x:Type vm:AdditionalParameterViewModel}">
-                            <Button x:Name="button_ShowWindow" Command="{Binding ShowListWindowCommand}" Background="White" BorderBrush="White">Список...</Button>
+                            <Button x:Name="button_ShowWindow" Command="{Binding ShowEditListWindowCommand}" Background="White" BorderBrush="White">Список...</Button>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>

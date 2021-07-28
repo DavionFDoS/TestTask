@@ -26,7 +26,7 @@ namespace TestTask
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new ApplicationViewModel(new DefaultDialogService(), new JsonFileService(), new DefaultNavigationService());
+            DataContext = new ApplicationViewModel(new DialogService(), new JsonFileService(), new Services.NavigationService());
         }
     }
 }

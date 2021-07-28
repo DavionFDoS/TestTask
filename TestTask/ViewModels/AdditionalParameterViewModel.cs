@@ -25,9 +25,7 @@ namespace TestTask.ViewModels
             stringList = parameter.ParametersList != null
                 ? new ObservableCollection<Params>(parameter.ParametersList)
                 : new ObservableCollection<Params>();
-            stringListBefore = parameter.ParametersList != null
-                ? new ObservableCollection<Params>(parameter.ParametersList)
-                : new ObservableCollection<Params>();
+            stringListBefore = Clone(stringList);
         }
 
         public AdditionalParameter Model => parameter;
@@ -61,16 +59,14 @@ namespace TestTask.ViewModels
         private ObservableCollection<Params> stringList;
 
         public ObservableCollection<Params> StringList => stringList;
-        private ObservableCollection<Params> stringListBefore;
+        private readonly IList<Params> stringListBefore;
 
-        public ObservableCollection<Params> StringListBefore => stringListBefore;
-
-        private ICommand showListWindowCommand;
-        public ICommand ShowListWindowCommand 
+        private ICommand showEditListWindowCommand;
+        public ICommand ShowEditListWindowCommand
         {
             get
             {
-                return showListWindowCommand ??= new RelayCommand(obj =>
+                return showEditListWindowCommand ??= new RelayCommand(obj =>
                 {
                     navigation.NavigateTo(this);
                 },
@@ -93,7 +89,7 @@ namespace TestTask.ViewModels
                     }
 
                 },
-                    (obj) => (Params)obj != stringList?.First() && stringList.Count > 0);
+                    (obj) => stringList.Count > 0 && (Params)obj != stringList?.First());
             }
         }
 
@@ -111,7 +107,7 @@ namespace TestTask.ViewModels
                         stringList.Move(currentIndex, currentIndex + 1);
                     }
                 },
-                    (obj) => (Params)obj != stringList?.Last() && stringList.Count > 0);
+                    (obj) => stringList.Count > 0 && (Params)obj != stringList?.Last());
             }
         }
 
@@ -123,11 +119,10 @@ namespace TestTask.ViewModels
             {
                 return okndCloseInWindowCommand ??= new RelayCommand(obj =>
                 {
-                    if(obj is ListWindow window)
+                    if (obj is EditListWindow window)
                     {
                         window.Close();
                     }
-
                 });
             }
         }
@@ -161,7 +156,7 @@ namespace TestTask.ViewModels
             {
                 return addInWindowCommand ??= new RelayCommand(obj =>
                 {
-                    stringList.Insert(0, new Params { Name = "Значение " + stringList.Count});
+                    stringList.Insert(stringList.Count, new Params { Name = "Value " + stringList.Count });
                 },
                 (obj) => parameter.Type == AdditionalParameterType.ListValueSet);
             }

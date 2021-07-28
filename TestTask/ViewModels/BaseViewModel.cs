@@ -5,16 +5,15 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using TestTask.Models;
 
 namespace TestTask.ViewModels
 {
-    public abstract class BaseViewModel : INotifyPropertyChanged
+    public class BaseViewModel : Observer
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected void RaisePropertyChanged([CallerMemberName] string propertyName = null)
+        protected static IList<Params> Clone(IList<Params> clone)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            return new List<Params>(clone);
         }
     }
 }
