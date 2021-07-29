@@ -25,7 +25,7 @@ namespace TestTask.ViewModels
             stringList = parameter.ValuesList != null
                 ? new ObservableCollection<Values>(parameter.ValuesList)
                 : new ObservableCollection<Values>();
-            stringListBefore = Clone(stringList);
+            stringListBefore = Clone(parameter.ValuesList);
         }
 
         public AdditionalParameter Model => parameter;

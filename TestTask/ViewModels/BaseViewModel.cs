@@ -13,7 +13,12 @@ namespace TestTask.ViewModels
     {
         protected static IList<Values> Clone(IList<Values> clone)
         {
-            return new List<Values>(clone);
+            IList<Values> copyList = new List<Values>();
+            foreach(Values values in clone)
+            {
+                copyList.Add(new Values { Name = values.Name });
+            }
+            return new List<Values>(copyList);
         }
     }
 }

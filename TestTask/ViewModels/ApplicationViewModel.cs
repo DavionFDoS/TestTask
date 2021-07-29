@@ -90,14 +90,15 @@ namespace TestTask.ViewModels
             }
         }
 
-        private ObservableCollection<AdditionalParameterViewModel> InitializeData()
+        private void InitializeData()
         {
             var additionalParameters = fileService.Open(dialogService.FilePath);
-            IList<AdditionalParameterViewModel> vm = new List<AdditionalParameterViewModel>();
+            AdditionalParameters?.Clear();
             foreach (var parameter in additionalParameters)
-                vm.Add(new AdditionalParameterViewModel(
-                    parameter, navigation, dialogService));
-            return new ObservableCollection<AdditionalParameterViewModel>(vm);
+            {
+                AdditionalParameters.Add(new AdditionalParameterViewModel(
+                parameter, navigation, dialogService));
+            }
         }
         // команда открытия файла
         private ICommand openCommand;
@@ -109,14 +110,7 @@ namespace TestTask.ViewModels
                   {
                       try
                       {
-                          //AdditionalParameters.Clear();
-                          //AdditionalParameters = InitializeData();
-                          
-                          var additionalParameters = fileService.Open(dialogService.FilePath); //Rem: почему не сделано как в конструкторе и через общий метод? или вызов OpenCommand.Execute()
-                          AdditionalParameters.Clear();
-                          foreach (var parameter in additionalParameters)
-                              AdditionalParameters.Add(new AdditionalParameterViewModel(
-                              parameter, navigation, dialogService));
+                          InitializeData();
                           dialogService.ShowMessage("Изменения отменены");
                       }
                       catch (Exception ex)
@@ -157,7 +151,7 @@ namespace TestTask.ViewModels
                     if (obj is AdditionalParameterViewModel parameter)
                     {
                         int currentIndex = AdditionalParameters.IndexOf(parameter);
-                        AdditionalParameters.Move(currentIndex, currentIndex + 1);
+                            AdditionalParameters.Move(currentIndex, currentIndex + 1);
                     }
                 },
                     (obj) => obj is AdditionalParameterViewModel && AdditionalParameters.Count > 0 && obj != AdditionalParameters?.Last());
@@ -170,18 +164,12 @@ namespace TestTask.ViewModels
             this.dialogService = dialogService;
             this.navigation = navigation;
             dialogService.FilePath = @"TestTaskParametersData.json";
-            //AdditionalParameters = new ObservableCollection<AdditionalParameterViewModel>
-            //{
-            //    new AdditionalParameterViewModel(new AdditionalParameter{ValuesList = new List<Values>{ new Values{Name = "Value 1"}, new Values{Name = "Value 2"}, new Values{Name = "Value 3"} }, Title = "Par1", Type = AdditionalParameterType.String }, navigation, dialogService),
-            //    new AdditionalParameterViewModel(new AdditionalParameter{ValuesList = new List<Values>{ new Values{Name = "Value 1"}, new Values{Name = "Value 2"}, new Values{Name = "Value 3"} }, Title = "Par2", Type = AdditionalParameterType.StringWithHystory}, navigation, dialogService),
-            //    new AdditionalParameterViewModel(new AdditionalParameter{ValuesList = new List<Values>{ new Values{Name = "Value 1"}}, Title = "Par3", Type = AdditionalParameterType.ListValue }, navigation, dialogService),
-            //    new AdditionalParameterViewModel(new AdditionalParameter{ValuesList = new List<Values>{ new Values{Name = "Value 1"}, new Values{Name = "Value 2"}, new Values{Name = "Value 3"} }, Title = "Par4", Type = AdditionalParameterType.ListValueset }, navigation, dialogService)
-            //};
             if (File.Exists(dialogService.FilePath))
             {
-                AdditionalParameters = new ObservableCollection<AdditionalParameterViewModel>(
-                    fileService.Open(dialogService.FilePath).Select(m => new AdditionalParameterViewModel(m, navigation, dialogService)));
-                //AdditionalParameters = InitializeData();
+                //AdditionalParameters = new ObservableCollection<AdditionalParameterViewModel>(
+                //    fileService.Open(dialogService.FilePath).Select(m => new AdditionalParameterViewModel(m, navigation, dialogService)));
+                AdditionalParameters = new ObservableCollection<AdditionalParameterViewModel>();
+                InitializeData();
             }
             else
             {
