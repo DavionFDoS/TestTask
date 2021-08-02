@@ -7,7 +7,7 @@
         xmlns:models="clr-namespace:TestTask.Models"
         xmlns:vm="clr-namespace:TestTask.ViewModels" d:DataContext="{d:DesignInstance Type=vm:AdditionalParameterViewModel}"
         mc:Ignorable="d" WindowStartupLocation="CenterOwner"
-        Title="Список" Height="300" Width="300" Icon="/Icons/heart.ico" x:Name="editListWindow">
+        Title="Список" MinHeight="300" MinWidth="300" MaxHeight="400" MaxWidth="400" Icon="/Icons/heart.ico" x:Name="editListWindow" ShowInTaskbar="False">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="0.05*" />
@@ -52,9 +52,9 @@
             </StackPanel>
             <StackPanel Grid.Column="1" VerticalAlignment="Bottom">
                 <Button Height="20" HorizontalAlignment="Stretch" Content="Ок" IsDefault="True"
-                        Command="{Binding OkndCloseValueCommand}" CommandParameter="{Binding ElementName=editListWindow}" Margin="5"></Button>
+                        Command="{Binding OkndCloseCommand}" CommandParameter="{Binding ElementName=editListWindow}" Margin="5"></Button>
                 <Button Height="20" HorizontalAlignment="Stretch" Content="Отмена" 
-                        Command="{Binding CancelValueCommand}" Margin="5"></Button>
+                        Command="{Binding CancelCommand}" Margin="5"></Button>
             </StackPanel>
         </Grid>
     </Grid>

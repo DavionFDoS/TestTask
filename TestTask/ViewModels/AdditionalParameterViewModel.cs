@@ -55,10 +55,24 @@ namespace TestTask.ViewModels
                 }
             }
         }
+
+        //public List<Values> Values
+        //{
+        //    get => parameter.ValuesList;
+        //    set
+        //    {
+        //        if (parameter.ValuesList != value)
+        //        {
+        //            parameter.ValuesList = value;
+        //            RaisePropertyChanged();
+        //        }
+        //    }
+        //}
+
         /// <summary>
         /// Список значений 
         /// </summary>
-        private ObservableCollection<Values> StringList { get; }
+        public ObservableCollection<Values> StringList { get; set; }
 
         /// <summary>
         /// Копия списка значений для отката изменений
@@ -120,12 +134,12 @@ namespace TestTask.ViewModels
         /// <summary>
         /// Команда сохранения сделанных изменений
         /// </summary>
-        private ICommand okndCloseValueCommand;
-        public ICommand OkndCloseValueCommand
+        private ICommand okndCloseCommand;
+        public ICommand OkndCloseCommand
         {
             get
             {
-                return okndCloseValueCommand ??= new RelayCommand(obj =>
+                return okndCloseCommand ??= new RelayCommand(obj =>
                 {
                     navigation.NavigateFrom(this);
                 });
@@ -134,12 +148,12 @@ namespace TestTask.ViewModels
         /// <summary>
         /// Команда отмены изменений
         /// </summary>
-        private ICommand cancelValueCommand;
-        public ICommand CancelValueCommand
+        private ICommand cancelCommand;
+        public ICommand CancelCommand //peredelat'
         {
             get
             {
-                return cancelValueCommand ??= new RelayCommand(obj =>
+                return cancelCommand ??= new RelayCommand(obj =>
                 {
                         StringList.Clear();
                         foreach (var s in StringListBefore)

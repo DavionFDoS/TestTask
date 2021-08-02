@@ -22,9 +22,12 @@ namespace TestTask.Services
 
         public void NavigateFrom(BaseViewModel viewModel)
         {
-            if (viewModel is AdditionalParameterViewModel)
+            var view = Application.Current.Windows.Cast<Window>()
+                                      .Where(win => win is EditListWindow)
+                                      .FirstOrDefault();
+
+            if (view != null)
             {
-                var view = new EditListWindow() { DataContext = viewModel };
                 view.Close();
             }
         }

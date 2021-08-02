@@ -20,7 +20,6 @@ namespace TestTask.ViewModels
         private readonly INavigationService navigation;
         private readonly IFileService fileService;
         private readonly IDialogService dialogService;
-        //private int indexOfChosenParameter;
         public ObservableCollection<AdditionalParameterViewModel> AdditionalParameters { get; set; }
         public static AdditionalParameterType[] AdditionalParameterTypes => Enum.GetValues<AdditionalParameterType>();
 
@@ -32,7 +31,9 @@ namespace TestTask.ViewModels
                 (AdditionalParameterType.ListValueSet, "Набор значений из списка")
                 );
 
-        // команда добавления нового объекта
+        /// <summary>
+        /// Команда добавления нового дополнительного параметра
+        /// </summary>
         private ICommand addCommand;
         public ICommand AddCommand
         {
@@ -52,7 +53,9 @@ namespace TestTask.ViewModels
                   });
             }
         }
-        // команда удаления выбранного элемента
+        /// <summary>
+        /// Команда удаления выбранного дополнительного параметра
+        /// </summary>
         private ICommand removeCommand;
         public ICommand RemoveCommand
         {
@@ -60,27 +63,26 @@ namespace TestTask.ViewModels
             {
                 return removeCommand ??= new RelayCommand(obj =>
                     {
-                        if (MessageBox.Show("Вы действительно хотите удалить этот параметр?", "Удалить", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
-                        {
-                            if (obj is AdditionalParameterViewModel parameter)
-                                AdditionalParameters.Remove(parameter);
-                        }
+                        if (dialogService.ShowMessage("Вы действительно хотите удалить это значение?", "Удалить", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                            AdditionalParameters.Remove((AdditionalParameterViewModel)obj);
                     },
-                    (obj) => AdditionalParameters.Count > 0 && obj != null);
+                    (obj) => obj is AdditionalParameterViewModel parameter && AdditionalParameters?.Count > 0 && obj != null);
             }
         }
-        // команда сохранения файла
-        private ICommand saveCommand;
-        public ICommand SaveCommand
+        /// <summary>
+        /// Команда сохранения изменений в файл
+        /// </summary>
+        private ICommand saveChangesCommand;
+        public ICommand SaveChangesCommand
         {
             get
             {
-                return saveCommand ??= new RelayCommand(obj =>
+                return saveChangesCommand ??= new RelayCommand(obj =>
                   {
                       try
                       {
                           fileService.Save(dialogService.FilePath, AdditionalParameters.Select(vm => vm.Model).ToList());
-                          dialogService.ShowMessage("Изменения сохранены");
+                          dialogService.ShowMessage("Изменения были успешно сохранены");
                       }
                       catch (Exception ex)
                       {
@@ -92,13 +94,15 @@ namespace TestTask.ViewModels
 
         private void InitializeData()
         {
-            var additionalParameters = fileService.Open(dialogService.FilePath);
-            AdditionalParameters?.Clear();
-            foreach (var parameter in additionalParameters)
-            {
-                AdditionalParameters.Add(new AdditionalParameterViewModel(
-                parameter, navigation, dialogService));
-            }
+            //var additionalParameters = fileService.Open(dialogService.FilePath);
+            //AdditionalParameters?.Clear();
+            //foreach (var parameter in additionalParameters)
+            //{
+            //    AdditionalParameters.Add(new AdditionalParameterViewModel(
+            //    parameter, navigation, dialogService));
+            //}
+            AdditionalParameters = new ObservableCollection<AdditionalParameterViewModel>(
+                fileService.Open(dialogService.FilePath).Select(m => new AdditionalParameterViewModel(m, navigation, dialogService)));
         }
         // команда открытия файла
         private ICommand openCommand;
@@ -129,12 +133,8 @@ namespace TestTask.ViewModels
             {
                 return moveUpCommand ??= new RelayCommand(obj =>
                 {
-                    if (obj is AdditionalParameterViewModel parameter)
-                    {
-                        int currentIndex = AdditionalParameters.IndexOf(parameter);
+                        int currentIndex = AdditionalParameters.IndexOf((AdditionalParameterViewModel)obj);
                         AdditionalParameters.Move(currentIndex, currentIndex - 1);
-                    }
-
                 },
                     (obj) => obj is AdditionalParameterViewModel && AdditionalParameters.Count > 0 && obj != AdditionalParameters?.First());
             }
@@ -148,11 +148,8 @@ namespace TestTask.ViewModels
             {
                 return moveDownCommand ??= new RelayCommand(obj =>
                 {
-                    if (obj is AdditionalParameterViewModel parameter)
-                    {
-                        int currentIndex = AdditionalParameters.IndexOf(parameter);
-                            AdditionalParameters.Move(currentIndex, currentIndex + 1);
-                    }
+                        int currentIndex = AdditionalParameters.IndexOf((AdditionalParameterViewModel)obj);
+                        AdditionalParameters.Move(currentIndex, currentIndex + 1);
                 },
                     (obj) => obj is AdditionalParameterViewModel && AdditionalParameters.Count > 0 && obj != AdditionalParameters?.Last());
             }
@@ -173,7 +170,7 @@ namespace TestTask.ViewModels
             }
             else
             {
-                dialogService.ShowMessage("File doesn't exist");
+                
             }
         }
     }

@@ -18,9 +18,6 @@ namespace TestTask
 
         protected override void OnStartup(StartupEventArgs e)
         {
-
-            //dialogService.Register<EditNameViewModel, EditNameWindow>();
-            //dialogService.Register<EditValuesListViewModel, ChangeParameterWindow>();
             var viewModel = new ApplicationViewModel(new DialogService(), new JsonFileService(), new NavigationService()); ;
             var view = new MainWindow { DataContext = viewModel };
             view.ShowDialog();

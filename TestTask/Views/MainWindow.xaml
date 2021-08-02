@@ -8,7 +8,7 @@
         xmlns:vm ="clr-namespace:TestTask.ViewModels" 
         d:DataContext="{d:DesignInstance Type=vm:ApplicationViewModel}"
         mc:Ignorable="d"
-        Title="Дополнительные параметры" Height="650" Width="700">
+        Title="Дополнительные параметры" Height="650" Width="700" MinHeight="500" MinWidth="550" MaxHeight="800" MaxWidth="850">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
@@ -82,7 +82,7 @@
                 <ColumnDefinition Width ="0.2*"/>
                 <ColumnDefinition Width ="0.2*"/>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="1" x:Name="button_Ok" Command="{Binding SaveCommand}" Content="Ок" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
+            <Button Grid.Column="1" x:Name="button_Ok" Command="{Binding SaveChangesCommand}" Content="Ок" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
             <Button Grid.Column="2" x:Name="button_Cancel" Command="{Binding OpenCommand}" Content="Отмена" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
         </Grid>
     </Grid>
