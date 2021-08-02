@@ -9,16 +9,10 @@ using TestTask.Models;
 
 namespace TestTask.ViewModels
 {
+    /// <summary>
+    /// Класс, на основе которого необходимо создавать все ViewModels приложения
+    /// </summary>
     public class BaseViewModel : Observer
     {
-        protected static IList<Values> Clone(IList<Values> clone)
-        {
-            IList<Values> copyList = new List<Values>();
-            foreach(Values values in clone)
-            {
-                copyList.Add(new Values { Name = values.Name });
-            }
-            return new List<Values>(copyList);
-        }
     }
 }

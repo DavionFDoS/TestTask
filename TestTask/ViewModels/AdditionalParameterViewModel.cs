@@ -22,10 +22,10 @@ namespace TestTask.ViewModels
             this.parameter = parameter;
             this.navigation = navigation;
             this.dialogService = dialogService;
-            stringList = parameter.ValuesList != null
+            StringList = parameter.ValuesList != null
                 ? new ObservableCollection<Values>(parameter.ValuesList)
                 : new ObservableCollection<Values>();
-            stringListBefore = Clone(parameter.ValuesList);
+            StringListBefore = parameter.Clone(parameter?.ValuesList);
         }
 
         public AdditionalParameter Model => parameter;
@@ -55,15 +55,19 @@ namespace TestTask.ViewModels
                 }
             }
         }
-        // лист значений
-        private ObservableCollection<Values> stringList;
+        /// <summary>
+        /// Список значений 
+        /// </summary>
+        private ObservableCollection<Values> StringList { get; }
 
-        public ObservableCollection<Values> StringList => stringList;
+        /// <summary>
+        /// Копия списка значений для отката изменений
+        /// </summary>
+        private readonly IList<Values> StringListBefore;
 
-        // Копия листа значений для отката изменений
-        private readonly IList<Values> stringListBefore;
-
-        // команда открытия окна редактирования списка
+        /// <summary>
+        /// Команда открытия окна редактирования списка значений
+        /// </summary>
         private ICommand showEditListWindowCommand;
         public ICommand ShowEditListWindowCommand
         {
@@ -77,102 +81,103 @@ namespace TestTask.ViewModels
             }
         }
 
-        // команда перемещения вверх
-        private ICommand moveUpInWindowCommand;
-        public ICommand MoveUpInWindowCommand
+        /// <summary>
+        /// Команда перемещения значения вверх
+        /// </summary>
+        private ICommand moveUpValueCommand;
+        public ICommand MoveUpValueCommand
         {
             get
             {
-                return moveUpInWindowCommand ??= new RelayCommand(obj =>
+                return moveUpValueCommand ??= new RelayCommand(obj =>
                 {
-                    if (obj is Values parameter)
-                    {
-                        int currentIndex = stringList.IndexOf(parameter);
-                        stringList.Move(currentIndex, currentIndex - 1);
-                    }
+
+                    int currentIndex = StringList.IndexOf((Values)obj);
+                    StringList.Move(currentIndex, currentIndex - 1);
 
                 },
-                    (obj) => stringList.Count > 0 && (Values)obj != stringList?.First());
+                    (obj) => obj is Values parameter && StringList?.Count > 0 && (Values)obj != StringList?.First() && obj != null);
             }
         }
 
-        // команда перемещения вниз
-        private ICommand moveDownInWindowCommand;
-        public ICommand MoveDownInWindowCommand
+        /// <summary>
+        /// Команда перемещения значения вниз
+        /// </summary>
+        private ICommand moveDownValueCommand;
+        public ICommand MoveDownValueCommand
         {
             get
             {
-                return moveDownInWindowCommand ??= new RelayCommand(obj =>
+                return moveDownValueCommand ??= new RelayCommand(obj =>
                 {
-                    if (obj is Values parameter)
-                    {
-                        int currentIndex = stringList.IndexOf(parameter);
-                        stringList.Move(currentIndex, currentIndex + 1);
-                    }
+                    int currentIndex = StringList.IndexOf((Values)obj);
+                    StringList.Move(currentIndex, currentIndex + 1);
                 },
-                    (obj) => stringList.Count > 0 && (Values)obj != stringList?.Last());
+                    (obj) => obj is Values parameter && StringList?.Count > 0 && (Values)obj != StringList?.Last() && obj != null);
             }
         }
 
-        // команда сохранения изменений
-        private ICommand okndCloseInWindowCommand;
-        public ICommand OkndCloseInWindowCommand
+        /// <summary>
+        /// Команда сохранения сделанных изменений
+        /// </summary>
+        private ICommand okndCloseValueCommand;
+        public ICommand OkndCloseValueCommand
         {
             get
             {
-                return okndCloseInWindowCommand ??= new RelayCommand(obj =>
+                return okndCloseValueCommand ??= new RelayCommand(obj =>
                 {
-                    if (obj is EditListWindow window)
-                    {
-                        window.Close();
-                    }
+                    navigation.NavigateFrom(this);
                 });
             }
         }
-        // команда отмены изменений
-        private ICommand cancelInWindowCommand;
-        public ICommand CancelInWindowCommand
+        /// <summary>
+        /// Команда отмены изменений
+        /// </summary>
+        private ICommand cancelValueCommand;
+        public ICommand CancelValueCommand
         {
             get
             {
-                return cancelInWindowCommand ??= new RelayCommand(obj =>
+                return cancelValueCommand ??= new RelayCommand(obj =>
                 {
-                        stringList.Clear();
-                        foreach (var s in stringListBefore)
-                            stringList.Add(s);          
+                        StringList.Clear();
+                        foreach (var s in StringListBefore)
+                            StringList.Add(s);          
                 });
             }
         }
 
-        // команда добавления нового объекта
-        private ICommand addInWindowCommand;
-        public ICommand AddInWindowCommand
+        /// <summary>
+        /// Команда добавления нового значения в список
+        /// </summary>
+        private ICommand addValueCommand;
+        public ICommand AddValueCommand
         {
             get
             {
-                return addInWindowCommand ??= new RelayCommand(obj =>
+                return addValueCommand ??= new RelayCommand(obj =>
                 {
-                    stringList.Insert(stringList.Count, new Values { Name = "Value " + stringList.Count });
+                    StringList.Insert(StringList.Count, new Values { Name = "Value " + (StringList.Count + 1)});
                 },
                 (obj) => parameter.Type == AdditionalParameterType.ListValueSet || parameter.Type == AdditionalParameterType.ListValue);
             }
         }
-        // команда удаления выбранного элемента
-        private ICommand removeInWindowCommand;
-        public ICommand RemoveInWindowCommand
+        /// <summary>
+        /// Команда удаления выбранного значения из списка
+        /// </summary>
+        private ICommand removeValueCommand;
+        public ICommand RemoveValueCommand
         {
             get
             {
-                return removeInWindowCommand ??= new RelayCommand(obj =>
+                return removeValueCommand ??= new RelayCommand(obj =>
                 {
-                    if (MessageBox.Show("Вы действительно хотите удалить это значение?", "Удалить", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
-                    {
-                        if (obj is Values parameter)
-                            stringList.Remove(parameter);
-                    }
+                            if(dialogService.ShowMessage("Вы действительно хотите удалить это значение?", "Удалить", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                                StringList.Remove((Values)obj);
                     
                 },
-                    (obj) => stringList.Count > 0 && obj != null);
+                    (obj) => obj is Values parameter && StringList?.Count > 0 && obj != null);
             }
         }
     }

@@ -8,6 +8,9 @@ using System.Windows;
 
 namespace TestTask.Services
 {
+    /// <summary>
+    /// Класс, реализующий интерфейс IDialogService
+    /// </summary>
     public class DialogService : IDialogService
     {
         public string FilePath { get; set; }
@@ -15,7 +18,13 @@ namespace TestTask.Services
         {
             MessageBox.Show(message);
         }
-
+        public MessageBoxResult ShowMessage(string message, string caption, MessageBoxButton button, MessageBoxImage icon)
+        {
+            MessageBoxResult result;
+            result = MessageBox.Show(message, caption, button, icon);
+            return result;
+            
+        }
         public bool OpenFileDialog()
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -37,5 +46,7 @@ namespace TestTask.Services
             }
             return false;
         }
+
+
     }
 }

@@ -19,5 +19,14 @@ namespace TestTask.Services
                 view.ShowDialog();
             }
         }
+
+        public void NavigateFrom(BaseViewModel viewModel)
+        {
+            if (viewModel is AdditionalParameterViewModel)
+            {
+                var view = new EditListWindow() { DataContext = viewModel };
+                view.Close();
+            }
+        }
     }
 }

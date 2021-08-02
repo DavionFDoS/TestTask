@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace TestTask.Models
 {
+    /// <summary>
+    /// Класс, представляющий собой значение из списка
+    /// </summary>
     public class Values : Observer
     {
         private string name;

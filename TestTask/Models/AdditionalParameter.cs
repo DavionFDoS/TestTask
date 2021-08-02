@@ -11,11 +11,45 @@ using System.Windows.Controls;
 
 namespace TestTask.Models
 {
-    public class AdditionalParameter // Модель добавленного параметра для DataGrid
+    /// <summary>
+    /// Класс, представляющий собой модель дополнительного параметра
+    /// </summary>
+    public class AdditionalParameter
     {
-        public string Title { get; set; } // Название
-        public AdditionalParameterType Type { get; set; } // Перечисления для ComboBox
+        /// <summary>
+        /// Название парметра
+        /// </summary>
+        public string Title { get; set; } 
+        /// <summary>
+        /// Тип параметра
+        /// </summary>
+        public AdditionalParameterType Type { get; set; } 
 
-        public List<Values> ValuesList { get; set; } // Список параметров в дополнительном окне
+        /// <summary>
+        /// Список значений параметра
+        /// </summary>
+        public List<Values> ValuesList { get; set; }
+
+        /// <summary>
+        /// Метод для получения клона списка значений
+        /// </summary>
+        /// <param name="originalList"></param>
+        /// <returns></returns>
+        public IList<Values> Clone(IList<Values> originalList)
+        {
+            if (originalList != null)
+            {
+                IList<Values> copyList = new List<Values>();
+                foreach (Values values in originalList)
+                {
+                    copyList.Add(new Values { Name = values.Name });
+                }
+                return new List<Values>(copyList);
+            }
+            else
+            {
+                return new List<Values>();
+            }
+        }
     }
 }

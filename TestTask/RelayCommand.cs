@@ -26,12 +26,16 @@ namespace TestTask
 
         public bool CanExecute(object parameter)
         {
-            return this.canExecute == null || this.canExecute(parameter);
+            return canExecute == null || this.canExecute(parameter);
         }
 
         public void Execute(object parameter)
         {
-            this.execute(parameter);
+            bool canBeExecuted = CanExecute(parameter);
+            if (canBeExecuted)
+            {
+                execute(parameter);
+            }
         }
     }
 }

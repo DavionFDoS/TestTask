@@ -42,19 +42,19 @@
                 </DataGrid>
             </StackPanel>
             <StackPanel Grid.Column="1">
-                <Button Height="20" HorizontalAlignment="Stretch" Content="Вверх" Command="{Binding MoveUpInWindowCommand}" 
+                <Button Height="20" HorizontalAlignment="Stretch" Content="Вверх" Command="{Binding MoveUpValueCommand}" 
                         CommandParameter="{Binding ElementName=grid_Values, Path=SelectedItem}" Margin="5"></Button>
-                <Button Height="20" HorizontalAlignment="Stretch" Content="Вниз" Command="{Binding MoveDownInWindowCommand}" 
+                <Button Height="20" HorizontalAlignment="Stretch" Content="Вниз" Command="{Binding MoveDownValueCommand}" 
                         CommandParameter="{Binding ElementName=grid_Values, Path=SelectedItem}" Margin="5"></Button>
-                <Button Height="20" HorizontalAlignment="Stretch" Content="Удалить" Command="{Binding RemoveInWindowCommand}" 
+                <Button Height="20" HorizontalAlignment="Stretch" Content="Удалить" Command="{Binding RemoveValueCommand}" 
                         CommandParameter="{Binding ElementName=grid_Values, Path=SelectedItem}" Margin="5"></Button>
-                <Button Height="20" HorizontalAlignment="Stretch" Content="Добавить" Command="{Binding AddInWindowCommand}" Margin="5"></Button>
+                <Button Height="20" HorizontalAlignment="Stretch" Content="Добавить" Command="{Binding AddValueCommand}" Margin="5"></Button>
             </StackPanel>
             <StackPanel Grid.Column="1" VerticalAlignment="Bottom">
                 <Button Height="20" HorizontalAlignment="Stretch" Content="Ок" IsDefault="True"
-                        Command="{Binding OkndCloseInWindowCommand}" CommandParameter="{Binding ElementName=editListWindow}" Margin="5"></Button>
+                        Command="{Binding OkndCloseValueCommand}" CommandParameter="{Binding ElementName=editListWindow}" Margin="5"></Button>
                 <Button Height="20" HorizontalAlignment="Stretch" Content="Отмена" 
-                        Command="{Binding CancelInWindowCommand}" Margin="5"></Button>
+                        Command="{Binding CancelValueCommand}" Margin="5"></Button>
             </StackPanel>
         </Grid>
     </Grid>

@@ -8,9 +8,21 @@ namespace TestTask.Models
 {
     public enum AdditionalParameterType
     {
-        String, // Простая строка
-        StringWithHystory, // Строка с историей
-        ListValue, // Значение из списка
-        ListValueSet // Список значений
+        /// <summary>
+        /// Простая строка
+        /// </summary>
+        String, 
+        /// <summary>
+        /// Строка с историей
+        /// </summary>
+        StringWithHystory, 
+        /// <summary>
+        /// Значение из списка
+        /// </summary>
+        ListValue, 
+        /// <summary>
+        /// Набор значений из списка
+        /// </summary>
+        ListValueSet
     }
 }
