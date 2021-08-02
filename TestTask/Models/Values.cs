@@ -11,7 +11,7 @@ namespace TestTask.Models
     /// <summary>
     /// Класс, представляющий собой значение из списка
     /// </summary>
-    public class Values : Observer
+    public class Values : Observer, ICloneable
     {
         private string name;
         public string Name
@@ -27,5 +27,9 @@ namespace TestTask.Models
             }
         }
 
+        public object Clone()
+        {
+            return MemberwiseClone();
+        }
     }
 }

@@ -14,6 +14,8 @@ namespace TestTask.Models
     /// <summary>
     /// Класс, представляющий собой модель дополнительного параметра
     /// </summary>
+    /// 
+
     public class AdditionalParameter
     {
         /// <summary>
@@ -40,9 +42,9 @@ namespace TestTask.Models
             if (originalList != null)
             {
                 IList<Values> copyList = new List<Values>();
-                foreach (Values values in originalList)
+                foreach (Values value in originalList)
                 {
-                    copyList.Add(new Values { Name = values.Name });
+                    copyList.Add(new Values { Name = (string)value.Name.Clone() });
                 }
                 return new List<Values>(copyList);
             }

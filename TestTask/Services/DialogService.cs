@@ -23,7 +23,6 @@ namespace TestTask.Services
             MessageBoxResult result;
             result = MessageBox.Show(message, caption, button, icon);
             return result;
-            
         }
         public bool OpenFileDialog()
         {

@@ -94,13 +94,6 @@ namespace TestTask.ViewModels
 
         private void InitializeData()
         {
-            //var additionalParameters = fileService.Open(dialogService.FilePath);
-            //AdditionalParameters?.Clear();
-            //foreach (var parameter in additionalParameters)
-            //{
-            //    AdditionalParameters.Add(new AdditionalParameterViewModel(
-            //    parameter, navigation, dialogService));
-            //}
             AdditionalParameters = new ObservableCollection<AdditionalParameterViewModel>(
                 fileService.Open(dialogService.FilePath).Select(m => new AdditionalParameterViewModel(m, navigation, dialogService)));
         }
@@ -133,8 +126,8 @@ namespace TestTask.ViewModels
             {
                 return moveUpCommand ??= new RelayCommand(obj =>
                 {
-                        int currentIndex = AdditionalParameters.IndexOf((AdditionalParameterViewModel)obj);
-                        AdditionalParameters.Move(currentIndex, currentIndex - 1);
+                    int currentIndex = AdditionalParameters.IndexOf((AdditionalParameterViewModel)obj);
+                    AdditionalParameters.Move(currentIndex, currentIndex - 1);
                 },
                     (obj) => obj is AdditionalParameterViewModel && AdditionalParameters.Count > 0 && obj != AdditionalParameters?.First());
             }
@@ -148,8 +141,8 @@ namespace TestTask.ViewModels
             {
                 return moveDownCommand ??= new RelayCommand(obj =>
                 {
-                        int currentIndex = AdditionalParameters.IndexOf((AdditionalParameterViewModel)obj);
-                        AdditionalParameters.Move(currentIndex, currentIndex + 1);
+                    int currentIndex = AdditionalParameters.IndexOf((AdditionalParameterViewModel)obj);
+                    AdditionalParameters.Move(currentIndex, currentIndex + 1);
                 },
                     (obj) => obj is AdditionalParameterViewModel && AdditionalParameters.Count > 0 && obj != AdditionalParameters?.Last());
             }
@@ -170,7 +163,8 @@ namespace TestTask.ViewModels
             }
             else
             {
-                
+                File.Create(dialogService.FilePath);
+                AdditionalParameters = new ObservableCollection<AdditionalParameterViewModel>();
             }
         }
     }

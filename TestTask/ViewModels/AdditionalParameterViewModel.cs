@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,7 +26,7 @@ namespace TestTask.ViewModels
             StringList = parameter.ValuesList != null
                 ? new ObservableCollection<Values>(parameter.ValuesList)
                 : new ObservableCollection<Values>();
-            StringListBefore = parameter.Clone(parameter?.ValuesList);
+            StringListBefore = parameter.Clone(parameter.ValuesList);
         }
 
         public AdditionalParameter Model => parameter;
@@ -56,19 +57,6 @@ namespace TestTask.ViewModels
             }
         }
 
-        //public List<Values> Values
-        //{
-        //    get => parameter.ValuesList;
-        //    set
-        //    {
-        //        if (parameter.ValuesList != value)
-        //        {
-        //            parameter.ValuesList = value;
-        //            RaisePropertyChanged();
-        //        }
-        //    }
-        //}
-
         /// <summary>
         /// Список значений 
         /// </summary>
@@ -77,7 +65,7 @@ namespace TestTask.ViewModels
         /// <summary>
         /// Копия списка значений для отката изменений
         /// </summary>
-        private readonly IList<Values> StringListBefore;
+        private IList<Values> StringListBefore;
 
         /// <summary>
         /// Команда открытия окна редактирования списка значений
@@ -141,6 +129,7 @@ namespace TestTask.ViewModels
             {
                 return okndCloseCommand ??= new RelayCommand(obj =>
                 {
+                    Model.ValuesList = StringList.ToList();
                     navigation.NavigateFrom(this);
                 });
             }
@@ -155,9 +144,13 @@ namespace TestTask.ViewModels
             {
                 return cancelCommand ??= new RelayCommand(obj =>
                 {
-                        StringList.Clear();
-                        foreach (var s in StringListBefore)
-                            StringList.Add(s);          
+                    //StringList.Clear();
+                    //foreach (var s in StringListBefore) //Rem: расточительно: очищать, а потом добавлять поэлементно!    что делать?: изменить целиком список + нотификация
+                    //    StringList.Add(new Values { Name = (string)s.Name.Clone() });
+
+                    StringList = new ObservableCollection<Values>(StringListBefore.Select(value => new Values { Name = value.Name}));
+                //    AdditionalParameters = new ObservableCollection<AdditionalParameterViewModel>(
+                //fileService.Open(dialogService.FilePath).Select(m => new AdditionalParameterViewModel(m, navigation, dialogService)));
                 });
             }
         }
@@ -172,7 +165,7 @@ namespace TestTask.ViewModels
             {
                 return addValueCommand ??= new RelayCommand(obj =>
                 {
-                    StringList.Insert(StringList.Count, new Values { Name = "Value " + (StringList.Count + 1)});
+                    StringList.Insert(StringList.Count, new Values { Name = "Value " + (StringList.Count + 1) });
                 },
                 (obj) => parameter.Type == AdditionalParameterType.ListValueSet || parameter.Type == AdditionalParameterType.ListValue);
             }
@@ -187,9 +180,8 @@ namespace TestTask.ViewModels
             {
                 return removeValueCommand ??= new RelayCommand(obj =>
                 {
-                            if(dialogService.ShowMessage("Вы действительно хотите удалить это значение?", "Удалить", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
-                                StringList.Remove((Values)obj);
-                    
+                    if (dialogService.ShowMessage("Вы действительно хотите удалить это значение?", "Удалить", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                        StringList.Remove((Values)obj);
                 },
                     (obj) => obj is Values parameter && StringList?.Count > 0 && obj != null);
             }
