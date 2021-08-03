@@ -52,9 +52,9 @@
             </StackPanel>
             <StackPanel Grid.Column="1" VerticalAlignment="Bottom">
                 <Button Height="20" HorizontalAlignment="Stretch" Content="Ок" IsDefault="True"
-                        Command="{Binding OkndCloseCommand}" CommandParameter="{Binding ElementName=editListWindow}" Margin="5"></Button>
+                        Command="{Binding OkAndCloseCommand}" CommandParameter="{Binding ElementName=editListWindow}" Margin="5"></Button>
                 <Button Height="20" HorizontalAlignment="Stretch" Content="Отмена" 
-                        Command="{Binding CancelCommand}" Margin="5"></Button>
+                        Command="{Binding CancelChangesCommand}" Margin="5"></Button>
             </StackPanel>
         </Grid>
     </Grid>

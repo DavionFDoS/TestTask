@@ -1,25 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
+﻿using System.Collections.Generic;
 
 namespace TestTask.Models
 {
     /// <summary>
     /// Класс, представляющий собой модель дополнительного параметра
     /// </summary>
-    /// 
-
     public class AdditionalParameter
     {
         /// <summary>
-        /// Название парметра
+        /// Название параметра
         /// </summary>
         public string Title { get; set; }
         /// <summary>
@@ -33,7 +22,7 @@ namespace TestTask.Models
         public List<Values> ValuesList { get; set; }
 
         /// <summary>
-        /// Метод для получения клона списка значений
+        /// Метод для получения глубокого клона списка значений
         /// </summary>
         /// <param name="originalList"></param>
         /// <returns></returns>
@@ -53,7 +42,10 @@ namespace TestTask.Models
                 return new List<Values>();
             }
         }
-
+        /// <summary>
+        /// Метод для получения глубокого клона дополнительного параметра
+        /// </summary>
+        /// <returns></returns>
         public AdditionalParameter Clone()
         {
             List<Values> values = (List<Values>)CloneList(ValuesList);

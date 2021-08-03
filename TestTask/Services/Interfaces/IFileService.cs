@@ -23,7 +23,5 @@ namespace TestTask
         /// <param name="filename"></param>
         /// <param name="additionalParameters"></param>
         void Save(string filename, IList<AdditionalParameter> additionalParameters);
-
-        //void SaveList(string filename, IList<string> list);
     }
 }

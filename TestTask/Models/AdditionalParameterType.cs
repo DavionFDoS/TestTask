@@ -6,20 +6,23 @@ using System.Threading.Tasks;
 
 namespace TestTask.Models
 {
+    /// <summary>
+    /// Перечисление типов допольнительных параметров
+    /// </summary>
     public enum AdditionalParameterType
     {
         /// <summary>
         /// Простая строка
         /// </summary>
-        String, 
+        String,
         /// <summary>
         /// Строка с историей
         /// </summary>
-        StringWithHystory, 
+        StringWithHystory,
         /// <summary>
         /// Значение из списка
         /// </summary>
-        ListValue, 
+        ListValue,
         /// <summary>
         /// Набор значений из списка
         /// </summary>

@@ -16,6 +16,11 @@ namespace TestTask.ViewModels
     /// </summary>
     public class BaseViewModel : Observer
     {
+        /// <summary>
+        /// Метод отмены изменений списка значений в модальном окне
+        /// </summary>
+        /// <param name="rollBackFrom"></param>
+        /// <param name="rollBackTo"></param>
         protected void RollBack(ObservableCollection<Values> rollBackFrom, ObservableCollection<Values> rollBackTo)
         {
             rollBackFrom.Clear();
@@ -24,7 +29,11 @@ namespace TestTask.ViewModels
                 rollBackFrom.Add(new Values { Name = (string)item.Name.Clone() });
             }
         }
-
+        /// <summary>
+        /// Метод отмены изменений
+        /// </summary>
+        /// <param name="rollBackFrom"></param>
+        /// <param name="rollBackTo"></param>
         protected void RollBack(ObservableCollection<AdditionalParameterViewModel> rollBackFrom, ObservableCollection<AdditionalParameterViewModel> rollBackTo)
         {
             rollBackFrom.Clear();

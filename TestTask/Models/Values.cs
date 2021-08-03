@@ -13,6 +13,9 @@ namespace TestTask.Models
     /// </summary>
     public class Values : Observer, ICloneable
     {
+        /// <summary>
+        /// Имя значения
+        /// </summary>
         private string name;
         public string Name
         {
@@ -26,7 +29,10 @@ namespace TestTask.Models
                 }
             }
         }
-
+        /// <summary>
+        /// Метод реализующий поверхностное копирование
+        /// </summary>
+        /// <returns></returns>
         public object Clone()
         {
             return MemberwiseClone();

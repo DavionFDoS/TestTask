@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TestTask.Models
 {
     /// <summary>
     /// Класс, реализующий интерфейс INotifyPropertyChanged 
     /// </summary>
-    public class Observer : INotifyPropertyChanged 
+    public class Observer : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 

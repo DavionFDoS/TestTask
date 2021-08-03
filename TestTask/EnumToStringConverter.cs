@@ -2,15 +2,17 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Data;
 
 namespace TestTask
 {
+    /// <summary>
+    /// Класс реализующий интерфейс IValueConverter
+    /// </summary>
+    /// <typeparam name="TEnum"></typeparam>
     public class EnumToStringConverter<TEnum> : IValueConverter where TEnum : Enum
     {
-        public EnumToStringConverter(params(TEnum value, string caption)[] captions)
+        public EnumToStringConverter(params (TEnum value, string caption)[] captions)
         {
             captionsDict = captions.ToDictionary(kv => kv.value, kv => kv.caption);
         }

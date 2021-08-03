@@ -1,14 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using TestTask.Models;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 using TestTask.Services;
 using System.IO;
@@ -17,13 +12,34 @@ namespace TestTask.ViewModels
 {
     public class ApplicationViewModel : BaseViewModel
     {
+        /// <summary>
+        /// Сервис навигации по приложению
+        /// </summary>
         private readonly INavigationService navigation;
+        /// <summary>
+        /// Сервис для работы с загрузочным файлом
+        /// </summary>
         private readonly IFileService fileService;
+        /// <summary>
+        /// Сервис диалоговых окон
+        /// </summary>
         private readonly IDialogService dialogService;
-        public ObservableCollection<AdditionalParameterViewModel> AdditionalParameters { get; set; }
-        public IList<AdditionalParameterViewModel> AdditionalParametersBackUp { get; set; }
-        public static AdditionalParameterType[] AdditionalParameterTypes => Enum.GetValues<AdditionalParameterType>();
 
+        /// <summary>
+        /// Коллекция VM дополнительных параметров
+        /// </summary>
+        public ObservableCollection<AdditionalParameterViewModel> AdditionalParameters { get; set; }
+        /// <summary>
+        /// Копия коллекции AdditionalParameters для отката изменений
+        /// </summary>
+        public IList<AdditionalParameterViewModel> AdditionalParametersBackUp { get; set; }
+        /// <summary>
+        /// Массив типов дополнительных параметров
+        /// </summary>
+        public static AdditionalParameterType[] AdditionalParameterTypes => Enum.GetValues<AdditionalParameterType>();
+        /// <summary>
+        /// Конвертер типов дополнительных параметров в строковые значения
+        /// </summary>
         public static EnumToStringConverter<AdditionalParameterType> TypeToStringConverter { get; } =
             new EnumToStringConverter<AdditionalParameterType>(
                 (AdditionalParameterType.String, "Простая строка"),
@@ -42,11 +58,11 @@ namespace TestTask.ViewModels
             {
                 return addCommand ??= new RelayCommand(obj =>
                   {
-                      AdditionalParameters.Insert(0, new AdditionalParameterViewModel(
+                      AdditionalParameters.Insert(AdditionalParameters.Count, new AdditionalParameterViewModel(
                           new AdditionalParameter
                           {
                               ValuesList = new List<Values>(),
-                              Title = "Added Parameter",
+                              Title = "Par" + (AdditionalParameters.Count + 1),
                               Type = AdditionalParameterType.String
                           },
                           navigation,
@@ -71,7 +87,7 @@ namespace TestTask.ViewModels
             }
         }
         /// <summary>
-        /// Команда сохранения изменений в файл
+        /// Команда сохранения изменений в файл и выхода из приложения
         /// </summary>
         private ICommand saveChangesCommand;
         public ICommand SaveChangesCommand
@@ -104,16 +120,8 @@ namespace TestTask.ViewModels
             {
                 return loadDataCommand ??= new RelayCommand(obj =>
                   {
-                      try
-                      {
-                          //AdditionalParameters = InitializeData();
-                          RollBack(AdditionalParameters, new ObservableCollection<AdditionalParameterViewModel>(AdditionalParametersBackUp));
-                          dialogService.ShowMessage("Изменения отменены");
-                      }
-                      catch (Exception ex)
-                      {
-                          dialogService.ShowMessage(ex.Message);
-                      }
+                      RollBack(AdditionalParameters, new ObservableCollection<AdditionalParameterViewModel>(AdditionalParametersBackUp));
+                      dialogService.ShowMessage("Изменения отменены");
                   });
             }
         }

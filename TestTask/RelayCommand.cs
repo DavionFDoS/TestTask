@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace TestTask
 {
+    /// <summary>
+    /// Класс реализующий интерфейс ICommand
+    /// </summary>
     public class RelayCommand : ICommand
     {
         private Action<object> execute;

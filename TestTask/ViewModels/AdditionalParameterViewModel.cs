@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using TestTask.Models;
@@ -16,7 +11,13 @@ namespace TestTask.ViewModels
     public class AdditionalParameterViewModel : BaseViewModel
     {
         private readonly AdditionalParameter parameter;
+        /// <summary>
+        /// Сервис навигации по приложению
+        /// </summary>
         private readonly INavigationService navigation;
+        /// <summary>
+        /// Сервис диалоговых окон
+        /// </summary>
         private readonly IDialogService dialogService;
 
         public AdditionalParameterViewModel(AdditionalParameter parameter, INavigationService navigation, IDialogService dialogService)
@@ -121,14 +122,14 @@ namespace TestTask.ViewModels
         }
 
         /// <summary>
-        /// Команда сохранения сделанных изменений
+        /// Команда сохранения сделанных изменений и закрытия окна
         /// </summary>
-        private ICommand okndCloseCommand;
-        public ICommand OkndCloseCommand
+        private ICommand okAndCloseCommand;
+        public ICommand OkAndCloseCommand
         {
             get
             {
-                return okndCloseCommand ??= new RelayCommand(obj =>
+                return okAndCloseCommand ??= new RelayCommand(obj =>
                 {
                     Model.ValuesList = (List<Values>)parameter.CloneList(StringList);
                     StringListBefore = parameter.CloneList(StringList);
@@ -139,21 +140,17 @@ namespace TestTask.ViewModels
         /// <summary>
         /// Команда отмены изменений
         /// </summary>
-        private ICommand cancelCommand;
-        public ICommand CancelCommand //peredelat'
+        private ICommand cancelChangesCommand;
+        public ICommand CancelChangesCommand
         {
             get
             {
-                return cancelCommand ??= new RelayCommand(obj =>
+                return cancelChangesCommand ??= new RelayCommand(obj =>
                 {
-                    //StringList.Clear();
-                    //foreach (var s in StringListBefore) //Rem: расточительно: очищать, а потом добавлять поэлементно!    что делать?: изменить целиком список + нотификация
-                    //    StringList.Add(new Values { Name = (string)s.Name.Clone() });
                     RollBack(StringList, new ObservableCollection<Values>(StringListBefore));
-                    //StringList = new ObservableCollection<Values>(StringListBefore.Select(value => new Values { Name = value.Name}));
                 });
             }
-        }      
+        }
 
         /// <summary>
         /// Команда добавления нового значения в список
