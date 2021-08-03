@@ -21,11 +21,11 @@ namespace TestTask.Models
         /// <summary>
         /// Название парметра
         /// </summary>
-        public string Title { get; set; } 
+        public string Title { get; set; }
         /// <summary>
         /// Тип параметра
         /// </summary>
-        public AdditionalParameterType Type { get; set; } 
+        public AdditionalParameterType Type { get; set; }
 
         /// <summary>
         /// Список значений параметра
@@ -37,7 +37,7 @@ namespace TestTask.Models
         /// </summary>
         /// <param name="originalList"></param>
         /// <returns></returns>
-        public IList<Values> Clone(IList<Values> originalList)
+        public IList<Values> CloneList(IList<Values> originalList)
         {
             if (originalList != null)
             {
@@ -52,6 +52,17 @@ namespace TestTask.Models
             {
                 return new List<Values>();
             }
+        }
+
+        public AdditionalParameter Clone()
+        {
+            List<Values> values = (List<Values>)CloneList(ValuesList);
+            return new AdditionalParameter
+            {
+                Title = this.Title,
+                Type = this.Type,
+                ValuesList = values
+            };
         }
     }
 }

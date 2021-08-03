@@ -20,10 +20,22 @@ namespace TestTask.Services
             }
         }
 
-        public void NavigateFrom(BaseViewModel viewModel)
+        public void ExitFromEditListWindow()
         {
             var view = Application.Current.Windows.Cast<Window>()
                                       .Where(win => win is EditListWindow)
+                                      .FirstOrDefault();
+
+            if (view != null)
+            {
+                view.Close();
+            }
+        }
+
+        public void ExitFromApplication()
+        {
+            var view = Application.Current.Windows.Cast<Window>()
+                                      .Where(win => win is MainWindow)
                                       .FirstOrDefault();
 
             if (view != null)

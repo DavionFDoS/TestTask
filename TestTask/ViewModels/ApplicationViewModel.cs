@@ -21,6 +21,7 @@ namespace TestTask.ViewModels
         private readonly IFileService fileService;
         private readonly IDialogService dialogService;
         public ObservableCollection<AdditionalParameterViewModel> AdditionalParameters { get; set; }
+        public IList<AdditionalParameterViewModel> AdditionalParametersBackUp { get; set; }
         public static AdditionalParameterType[] AdditionalParameterTypes => Enum.GetValues<AdditionalParameterType>();
 
         public static EnumToStringConverter<AdditionalParameterType> TypeToStringConverter { get; } =
@@ -79,35 +80,34 @@ namespace TestTask.ViewModels
             {
                 return saveChangesCommand ??= new RelayCommand(obj =>
                   {
-                      try
-                      {
-                          fileService.Save(dialogService.FilePath, AdditionalParameters.Select(vm => vm.Model).ToList());
-                          dialogService.ShowMessage("Изменения были успешно сохранены");
-                      }
-                      catch (Exception ex)
-                      {
-                          dialogService.ShowMessage(ex.Message);
-                      }
+                      fileService.Save(dialogService.FilePath, AdditionalParameters.Select(vm => vm.Model).ToList());
+                      dialogService.ShowMessage("Изменения были успешно сохранены");
+                      navigation.ExitFromApplication();
                   });
             }
         }
-
-        private void InitializeData()
+        /// <summary>
+        /// Метод загрузки данных из файла
+        /// </summary>
+        private ObservableCollection<AdditionalParameterViewModel> InitializeData()
         {
-            AdditionalParameters = new ObservableCollection<AdditionalParameterViewModel>(
+            return new ObservableCollection<AdditionalParameterViewModel>(
                 fileService.Open(dialogService.FilePath).Select(m => new AdditionalParameterViewModel(m, navigation, dialogService)));
         }
-        // команда открытия файла
-        private ICommand openCommand;
-        public ICommand OpenCommand
+        /// <summary>
+        /// Команда загрузки последних сохраненных данных
+        /// </summary>
+        private ICommand loadDataCommand;
+        public ICommand LoadDataCommand
         {
             get
             {
-                return openCommand ??= new RelayCommand(obj =>
+                return loadDataCommand ??= new RelayCommand(obj =>
                   {
                       try
                       {
-                          InitializeData();
+                          //AdditionalParameters = InitializeData();
+                          RollBack(AdditionalParameters, new ObservableCollection<AdditionalParameterViewModel>(AdditionalParametersBackUp));
                           dialogService.ShowMessage("Изменения отменены");
                       }
                       catch (Exception ex)
@@ -118,7 +118,9 @@ namespace TestTask.ViewModels
             }
         }
 
-        // команда перемещения вверх
+        /// <summary>
+        /// Команда перемещения дополнительного параметра вверх
+        /// </summary>
         private ICommand moveUpCommand;
         public ICommand MoveUpCommand
         {
@@ -129,11 +131,13 @@ namespace TestTask.ViewModels
                     int currentIndex = AdditionalParameters.IndexOf((AdditionalParameterViewModel)obj);
                     AdditionalParameters.Move(currentIndex, currentIndex - 1);
                 },
-                    (obj) => obj is AdditionalParameterViewModel && AdditionalParameters.Count > 0 && obj != AdditionalParameters?.First());
+                    (obj) => obj is AdditionalParameterViewModel && AdditionalParameters?.Count > 0 && obj != AdditionalParameters?.First());
             }
         }
 
-        // команда перемещения вниз
+        /// <summary>
+        /// Команда перемещения дополнительного параметра вниз
+        /// </summary>
         private ICommand moveDownCommand;
         public ICommand MoveDownCommand
         {
@@ -144,7 +148,7 @@ namespace TestTask.ViewModels
                     int currentIndex = AdditionalParameters.IndexOf((AdditionalParameterViewModel)obj);
                     AdditionalParameters.Move(currentIndex, currentIndex + 1);
                 },
-                    (obj) => obj is AdditionalParameterViewModel && AdditionalParameters.Count > 0 && obj != AdditionalParameters?.Last());
+                    (obj) => obj is AdditionalParameterViewModel && AdditionalParameters?.Count > 0 && obj != AdditionalParameters?.Last());
             }
         }
 
@@ -156,10 +160,8 @@ namespace TestTask.ViewModels
             dialogService.FilePath = @"TestTaskParametersData.json";
             if (File.Exists(dialogService.FilePath))
             {
-                //AdditionalParameters = new ObservableCollection<AdditionalParameterViewModel>(
-                //    fileService.Open(dialogService.FilePath).Select(m => new AdditionalParameterViewModel(m, navigation, dialogService)));
-                AdditionalParameters = new ObservableCollection<AdditionalParameterViewModel>();
-                InitializeData();
+                AdditionalParameters = InitializeData();
+                AdditionalParametersBackUp = InitializeData().ToList();
             }
             else
             {

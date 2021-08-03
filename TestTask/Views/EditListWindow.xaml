@@ -41,7 +41,7 @@
                     </DataGrid.Columns>
                 </DataGrid>
             </StackPanel>
-            <StackPanel Grid.Column="1">
+            <StackPanel Grid.Column="1" VerticalAlignment="Top">
                 <Button Height="20" HorizontalAlignment="Stretch" Content="Вверх" Command="{Binding MoveUpValueCommand}" 
                         CommandParameter="{Binding ElementName=grid_Values, Path=SelectedItem}" Margin="5"></Button>
                 <Button Height="20" HorizontalAlignment="Stretch" Content="Вниз" Command="{Binding MoveDownValueCommand}" 

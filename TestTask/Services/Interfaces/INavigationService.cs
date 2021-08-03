@@ -17,7 +17,10 @@ namespace TestTask.Services
         /// <summary>
         /// Метод закрытия модального окна
         /// </summary>
-        /// <param name="viewModel"></param>
-        void NavigateFrom(BaseViewModel viewModel);
+        void ExitFromEditListWindow();
+        /// <summary>
+        /// Метод закрытия окна приложения
+        /// </summary>
+        void ExitFromApplication();
     }
 }

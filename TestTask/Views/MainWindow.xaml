@@ -83,7 +83,7 @@
                 <ColumnDefinition Width ="0.2*"/>
             </Grid.ColumnDefinitions>
             <Button Grid.Column="1" x:Name="button_Ok" Command="{Binding SaveChangesCommand}" Content="Ок" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
-            <Button Grid.Column="2" x:Name="button_Cancel" Command="{Binding OpenCommand}" Content="Отмена" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+            <Button Grid.Column="2" x:Name="button_Cancel" Command="{Binding LoadDataCommand}" Content="Отмена" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
         </Grid>
     </Grid>
 </Window>

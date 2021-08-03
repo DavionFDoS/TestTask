@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,7 +27,7 @@ namespace TestTask.ViewModels
             StringList = parameter.ValuesList != null
                 ? new ObservableCollection<Values>(parameter.ValuesList)
                 : new ObservableCollection<Values>();
-            StringListBefore = parameter.Clone(parameter.ValuesList);
+            StringListBefore = parameter.CloneList(parameter.ValuesList);
         }
 
         public AdditionalParameter Model => parameter;
@@ -129,8 +130,9 @@ namespace TestTask.ViewModels
             {
                 return okndCloseCommand ??= new RelayCommand(obj =>
                 {
-                    Model.ValuesList = StringList.ToList();
-                    navigation.NavigateFrom(this);
+                    Model.ValuesList = (List<Values>)parameter.CloneList(StringList);
+                    StringListBefore = parameter.CloneList(StringList);
+                    navigation.ExitFromEditListWindow();
                 });
             }
         }
@@ -147,13 +149,11 @@ namespace TestTask.ViewModels
                     //StringList.Clear();
                     //foreach (var s in StringListBefore) //Rem: расточительно: очищать, а потом добавлять поэлементно!    что делать?: изменить целиком список + нотификация
                     //    StringList.Add(new Values { Name = (string)s.Name.Clone() });
-
-                    StringList = new ObservableCollection<Values>(StringListBefore.Select(value => new Values { Name = value.Name}));
-                //    AdditionalParameters = new ObservableCollection<AdditionalParameterViewModel>(
-                //fileService.Open(dialogService.FilePath).Select(m => new AdditionalParameterViewModel(m, navigation, dialogService)));
+                    RollBack(StringList, new ObservableCollection<Values>(StringListBefore));
+                    //StringList = new ObservableCollection<Values>(StringListBefore.Select(value => new Values { Name = value.Name}));
                 });
             }
-        }
+        }      
 
         /// <summary>
         /// Команда добавления нового значения в список
